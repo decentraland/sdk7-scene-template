@@ -5,7 +5,7 @@ const { Transform } = engine.baseComponents
 
 const callbackMap = new Map<Entity, () => void>()
 
-export function onMoveZombieFinish(entity: Entity, callback: () => void) {
+export function onMoveFinish(entity: Entity, callback: () => void) {
   callbackMap.set(entity, callback)
 }
 
@@ -21,9 +21,11 @@ export function moveSystem(dt: number) {
     move.hasFinished = move.normalizedTime >= 1
 
     if (move.hasFinished) {
+		MoveTransformComponent.deleteFrom(entity)
       const fn = callbackMap.get(entity)
       if (fn) fn()
-      MoveTransformComponent.deleteFrom(entity)
+     
     }
   }
 }
+
