@@ -1,0 +1,27 @@
+{
+  "name": "dcl-project",
+  "version": "1.0.0",
+  "description": "ECS7 ",
+  "scripts": {
+    "start": "./node_modules/.bin/dcl start",
+    "build": "build-ecs",
+    "watch": "build-ecs --watch",
+    "ecs:install": "npm install --save-dev decentraland-ecs@latest",
+    "ecs:install-next": "npm install --save-dev decentraland-ecs@next",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
+  },
+  "devDependencies": {
+    "@dcl/eslint-config": "^1.0.1",
+    "@dcl/sdk": "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/fix/crdt-entities/dcl-sdk-7.0.0-2598102541.commit-02db29f.tgz",
+    "decentraland": "https://sdk-team-cdn.decentraland.org/decentraland-cli/branch/temp/sdk7/decentraland-3.10.5-20220621153604.commit-b31c6d9.tgz"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0",
+    "yarn": "please use npm"
+  },
+  "dependencies": {
+    "@dcl/posix": "^1.0.4"
+  }
+}
