@@ -10,7 +10,7 @@ export function createText(): Entity {
   })
 
   TextShape.create(text, {
-    text: 'ECS7',
+    text: 'ECS 7',
     font: 'SansSerif',
     fontAutoSize: false,
     fontSize: 5,
