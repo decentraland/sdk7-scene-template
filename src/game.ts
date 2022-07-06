@@ -7,6 +7,7 @@ import { createNft } from './nft'
 import { createText } from './text'
 import { createZombie } from './zombie'
 import { moveSystem, onMoveZombieFinish } from './systems/moveZombie'
+import { spawnerSystem } from './systems/spawner'
 
 const _cubeEntity = createCube(8, 2, 8)
 const _coneEntity = createCone()
@@ -18,6 +19,7 @@ onMoveZombieFinish(zombie, () => {
   dcl.log('finished zombie', zombie)
 })
 
-addStateSystem(circularSystem, { t: 0 })
 addStateSystem(playSounds, { t: 0 })
+engine.addSystem(circularSystem)
 engine.addSystem(moveSystem)
+engine.addSystem(spawnerSystem)
