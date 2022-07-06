@@ -15,7 +15,7 @@ const { Transform, GLTFShape } = engine.baseComponents
 import { MoveTransformComponent } from './components/moveTransport'
 import { PathDataComponent } from './components/pathData'
 import { TimeOutComponent } from "./components/timeOut"
-import { onMoveFinish } from "./systems/moveZombie"
+import { onMoveFinish } from "./systems/moveSystem"
 import { onTimeUp } from "./systems/timeOutSystem"
 
 
