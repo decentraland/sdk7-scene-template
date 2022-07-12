@@ -1,6 +1,6 @@
 const { Transform, TextShape } = engine.baseComponents
 
-export function createText(): Entity {
+export function createText(value: string): Entity {
   const text = engine.addEntity()
 
   Transform.create(text, {
@@ -10,7 +10,7 @@ export function createText(): Entity {
   })
 
   TextShape.create(text, {
-    text: 'ECS 7',
+    text: value,
     font: 'SansSerif',
     fontAutoSize: false,
     fontSize: 5,
