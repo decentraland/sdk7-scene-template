@@ -42,7 +42,7 @@ export function addClickBehavior (entity:Entity, fn:(entity:Entity) => void ) {
 	})
 	callbackMap.set(entity, fn)
 	
-	ClickableComponent.create(entity)
+	ClickableComponent.create(entity, {lastPointerDownTs:0})
 
 	return entity
 }

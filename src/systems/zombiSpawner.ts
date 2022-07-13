@@ -18,7 +18,7 @@ export function zombieSpawnSystem(dt:number) {
 	if(!controller.spawnActive) return
 
 	if(controller.livesLeft <= 0){
-		gameOver()
+		lose()
 	} else if (controller.score >= controller.winningScore){
 		win()
 	} 
@@ -32,7 +32,7 @@ export function zombieSpawnSystem(dt:number) {
 		mutableController.spawnCountDown = mutableController.spawnInterval
 		dcl.log("SPAWNING NEW ZOMBIE")
 		spawnZombie()
-		playSound(entity)
+		playSound(entity, 'sounds/pickUp.mp3', true)
 
 	}
 
@@ -42,18 +42,15 @@ export function zombieSpawnSystem(dt:number) {
 engine.addSystem(zombieSpawnSystem)
 
 // how do I pass the controller component as a param to this function????
-function gameOver(){
+function lose(){
 	dcl.log("GAME OVER!!")
-
-	if( GameControllerComponent.has(coneEntity)){
-		GameControllerComponent.mutable(coneEntity).spawnActive = false
-	  }
+	endGame()
 }
 
 
 function win(){
 	dcl.log("YOU WIN!!")
-	GameControllerComponent.mutable(coneEntity).spawnActive = false
+	endGame()
 }
 
 function spawnZombie(){
@@ -61,4 +58,14 @@ function spawnZombie(){
 	let xPos = 2+  (Math.random() * 10)
 
 	createZombie(xPos)
+}
+
+function endGame(){
+	if( GameControllerComponent.has(coneEntity)){
+		GameControllerComponent.mutable(coneEntity).spawnActive = false
+	  }
+
+	  if( engine.baseComponents.AudioSource.has(coneEntity)){
+		engine.baseComponents.AudioSource.mutable(coneEntity).playing = false
+	  }
 }

@@ -1,8 +1,10 @@
+
 import { GameControllerComponent } from './components/gameController'
 import { MoveTransformComponent } from './components/moveTransport'
 import { coneEntity } from './game'
 import { addClickBehavior } from './systems/clickable'
 import { onMoveZombieFinish } from './systems/moveZombie'
+
 import { playSound } from './systems/sound'
 
 const { Transform, GLTFShape } = engine.baseComponents
@@ -36,22 +38,61 @@ export function createZombie(xPos:number): Entity {
     interpolationType: 1
   })
 
+  engine.baseComponents.Animator.create(zombie, {states: [
+	{
+		clip: "Walking",
+		loop:true,
+		name: "Walk", 
+		playing: true, 
+		shouldReset: false, 
+		speed: 1, 
+		weight: 1},
+		{
+		clip: "Attacking",
+		loop:true,
+		name: "Attack", 
+		playing: false, 
+		shouldReset: false, 
+		speed: 1, 
+		weight: 1
+	}
+  ]})
 
-onMoveZombieFinish(zombie, () => {
-	dcl.log('finished zombie', zombie)
 
-	if( GameControllerComponent.has(coneEntity)){
-		GameControllerComponent.mutable(coneEntity).livesLeft -=1
-	  }
+  onMoveZombieFinish(zombie, () => {
+		dcl.log('finished zombie', zombie)
 
-	  playSound(zombie)
-  })
+		if( GameControllerComponent.has(coneEntity)){
+			GameControllerComponent.mutable(coneEntity).livesLeft -=1
+		}
+
+		let animator = engine.baseComponents.Animator.mutable(zombie)
+		const walkAnim = animator.states[0] // animator.states.find( (anim) =>{anim.clip=="Walking"})
+		const attackAnim = animator.states[1]//animator.states.find( (anim) =>{anim.clip=="Attacking"})
+		if(walkAnim && attackAnim){
+			walkAnim.playing = false
+			walkAnim.loop = false
+			attackAnim.playing = true
+			attackAnim.loop = true
+		}
+
+		const nfts = engine.groupOf(engine.baseComponents.NFTShape)
+		
+		//only remove first
+		for (const [entity, nftShape] of nfts){
+			engine.removeEntity(entity)
+			break
+		}
+		
+
+		playSound(zombie, 'sounds/attack.mp3', true)
+	})
   
   addClickBehavior(zombie, ()=>{
 	  dcl.log("BOOM!!!")
 
 	  engine.removeEntity(zombie)
-	  playSound(zombie)
+	  playSound(zombie, 'sounds/explosion.mp3', true)
 
 	  if( GameControllerComponent.has(coneEntity)){
 		GameControllerComponent.mutable(coneEntity).score +=1

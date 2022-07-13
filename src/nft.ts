@@ -1,10 +1,10 @@
 const { Transform, NFTShape } = engine.baseComponents
 
-export function createNft(): Entity {
+export function createNft(xPos: number): Entity {
   const nft = engine.addEntity()
 
   Transform.create(nft, {
-    position: { x: 12, y: 1, z: 12 },
+    position: { x: xPos, y: 1, z: 13 },
     scale: { x: 1, y: 1, z: 1 },
     rotation: { x: 0, y: 0, z: 0, w: 1 }
   })
