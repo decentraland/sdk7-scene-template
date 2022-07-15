@@ -1,6 +1,8 @@
 import { GameControllerComponent } from '../components/gameController'
 import { createCone } from '../factory/cone'
 import { createNft } from '../factory/nft'
+import { playSound } from '../factory/sound'
+import { createZombie } from '../factory/zombie'
 
 const _LIVES = 5
 const _WINNING_SCORE = 15
@@ -31,6 +33,9 @@ function triggerGameStart() {
       engine.removeEntity(entity)
     }
 
+    for (let i = _LIVES; i >= 0; i--) {
+      createNft(i)
+    }
     return
   }
 
@@ -45,27 +50,68 @@ function triggerGameStart() {
   })
 
   for (let i = _LIVES; i >= 0; i--) {
-    const _nftEntity = createNft(i)
+    createNft(i)
   }
 
-  // TODO:
-  // if (engine.baseComponents.AudioSource.has(gameEntity)) {
-  //   const source = engine.baseComponents.AudioSource.mutable(gameEntity)
-  //   source.playing = true
-  // } else {
-  //   engine.baseComponents.AudioSource.create(gameEntity, {
-  //     audioClipUrl: '/sounds/ambient.mp3',
-  //     loop: true,
-  //     playing: true,
-  //     pitch: 1,
-  //     playedAtTimestamp: Date.now(),
-  //     volume: 1
-  //   })
-  // }
+  if (engine.baseComponents.AudioSource.has(gameEntity)) {
+    const source = engine.baseComponents.AudioSource.mutable(gameEntity)
+    source.playing = true
+  } else {
+    engine.baseComponents.AudioSource.create(gameEntity, {
+      audioClipUrl: '/sounds/ambient.mp3',
+      loop: true,
+      playing: true,
+      pitch: 1,
+      playedAtTimestamp: Date.now(),
+      volume: 1
+    })
+  }
 }
 
-export function gameLogicSystem() {
+export function gameLogicSystem(dt: number) {
+  const gameController = ensureGameController()
+
   if (engine.baseComponents.OnPointerDownResult.has(coneStarterEntity)) {
     triggerGameStart()
+  }
+
+  if (gameController.spawnActive) {
+    if (gameController.livesLeft <= 0) {
+      lose()
+    } else if (gameController.score >= gameController.winningScore) {
+      win()
+    }
+
+    gameController.spawnCountDown -= dt
+    if (gameController.spawnCountDown < 0) {
+      gameController.spawnCountDown = gameController.spawnInterval
+      const zombie = spawnZombie()
+      dcl.log('SPAWNING NEW ZOMBIE ', zombie)
+      playSound(zombie, 'sounds/pickUp.mp3', true)
+    }
+  }
+}
+
+function spawnZombie() {
+  const xPos = 2 + Math.random() * 10
+  return createZombie(xPos)
+}
+
+// how do I pass the controller component as a param to this function????
+function lose() {
+  dcl.log('GAME OVER!!')
+  endGame()
+}
+
+function win() {
+  dcl.log('YOU WIN!!')
+  endGame()
+}
+
+function endGame() {
+  ensureGameController().spawnActive = false
+
+  if (engine.baseComponents.AudioSource.has(gameEntity)) {
+    engine.baseComponents.AudioSource.mutable(gameEntity).playing = false
   }
 }

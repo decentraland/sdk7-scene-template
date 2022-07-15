@@ -1,6 +1,6 @@
 import { MoveTransformComponent } from '../components/moveTransport'
 import { ZombieComponent } from '../components/zombie'
-const { Transform, GLTFShape, OnPointerDown } = engine.baseComponents
+const { Transform, OnPointerDown, GLTFShape, BoxShape } = engine.baseComponents
 
 export function createZombie(xPos: number): Entity {
   const zombie = engine.addEntity()
@@ -13,19 +13,23 @@ export function createZombie(xPos: number): Entity {
     rotation: { x: 0, y: 0, z: 0, w: 1 }
   })
 
-  // GLTFShape.create(zombie, {
-  //   withCollisions: true,
-  //   isPointerBlocker: true,
-  //   visible: true,
-  //   src: 'models/zombie.glb'
-  // })
+  const zombieGltf = false
 
-  engine.baseComponents.BoxShape.create(zombie, {
-    withCollisions: true,
-    isPointerBlocker: true,
-    visible: true,
-    uvs: []
-  })
+  if (zombieGltf) {
+    GLTFShape.create(zombie, {
+      withCollisions: true,
+      isPointerBlocker: true,
+      visible: true,
+      src: 'models/zombie.glb'
+    })
+  } else {
+    BoxShape.create(zombie, {
+      withCollisions: true,
+      isPointerBlocker: true,
+      visible: true,
+      uvs: []
+    })
+  }
 
   MoveTransformComponent.create(zombie, {
     start: { x: xPos, y: 1, z: 3 },

@@ -1,11 +1,13 @@
 import { MoveTransformComponent, MoveTransformFinishedComponent } from '../components/moveTransport'
+import { ZombieComponent } from '../components/zombie'
+import { playSound } from '../factory/sound'
 import { Interpolate } from '../helper/interpolation'
 import { ensureGameController } from './game'
 
 const { Transform } = engine.baseComponents
 
 export function moveSystem(dt: number) {
-  for (const [entity, move, transform] of engine.mutableGroupOf(MoveTransformComponent, Transform)) {
+  for (const [entity, move, transform] of engine.mutableGroupOf(MoveTransformComponent, Transform, ZombieComponent)) {
     move.normalizedTime = Math.min(Math.max(move.normalizedTime + dt * move.speed, 0), 1)
     move.lerpTime = Interpolate(move.interpolationType, move.normalizedTime)
 
@@ -19,7 +21,7 @@ export function moveSystem(dt: number) {
     }
   }
 
-  for (const [zombieEntity] of engine.groupOf(MoveTransformFinishedComponent, Transform)) {
+  for (const [zombieEntity] of engine.groupOf(MoveTransformFinishedComponent, Transform, ZombieComponent)) {
     dcl.log('finished zombie', zombieEntity)
     ensureGameController().livesLeft -= 1
 
@@ -41,8 +43,7 @@ export function moveSystem(dt: number) {
       break
     }
 
-    // TODO:
-    // playSound(zombieEntity, 'sounds/attack.mp3', true)
+    playSound(zombieEntity, 'sounds/attack.mp3', true)
     MoveTransformFinishedComponent.deleteFrom(zombieEntity)
   }
 }
