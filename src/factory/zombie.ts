@@ -13,7 +13,7 @@ export function createZombie(xPos: number): Entity {
     rotation: { x: 0, y: 0, z: 0, w: 1 }
   })
 
-  const zombieGltf = false
+  const zombieGltf = true
 
   if (zombieGltf) {
     GLTFShape.create(zombie, {
