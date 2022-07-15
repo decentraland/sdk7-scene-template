@@ -67,8 +67,8 @@ export function createZombie(xPos:number): Entity {
 		}
 
 		let animator = engine.baseComponents.Animator.mutable(zombie)
-		const walkAnim = animator.states[0] // animator.states.find( (anim) =>{anim.clip=="Walking"})
-		const attackAnim = animator.states[1]//animator.states.find( (anim) =>{anim.clip=="Attacking"})
+		const walkAnim = animator.states[0] // animator.states.find( (anim) =>{return anim.clip=="Walking"})
+		const attackAnim = animator.states[1]//animator.states.find( (anim) =>{ return anim.clip=="Attacking"})
 		if(walkAnim && attackAnim){
 			walkAnim.playing = false
 			walkAnim.loop = false
