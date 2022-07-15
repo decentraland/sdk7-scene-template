@@ -1,7 +1,6 @@
 import { GameControllerComponent } from '../components/gameController'
 import { createCone } from '../factory/cone'
 import { createNft } from '../factory/nft'
-import { isShoted } from '../_internal/oneShotHelpers'
 
 const _LIVES = 5
 const _WINNING_SCORE = 15
@@ -66,7 +65,7 @@ function triggerGameStart() {
 }
 
 export function gameLogicSystem() {
-  if (isShoted(coneStarterEntity, engine.baseComponents.OnPointerDownResult)) {
+  if (engine.baseComponents.OnPointerDownResult.has(coneStarterEntity)) {
     triggerGameStart()
   }
 }
