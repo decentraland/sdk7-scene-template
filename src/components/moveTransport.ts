@@ -1,5 +1,5 @@
-// TODO: use higher number so we dont have conflicts (i.e. > 2000)
-const COMPONENT_ID = 2046
+import { getNextComponentId } from './customComponentIds'
+
 const Vector3EcsType = MapType({
   x: Float32,
   y: Float32,
@@ -7,7 +7,6 @@ const Vector3EcsType = MapType({
 })
 
 const MoveTransportData = MapType({
-  hasFinished: EcsBoolean,
   duration: Float32,
   start: Vector3EcsType,
   end: Vector3EcsType,
@@ -17,4 +16,8 @@ const MoveTransportData = MapType({
   interpolationType: Float32 // EcsInterpolation,
 })
 
-export const MoveTransformComponent = engine.defineComponent(COMPONENT_ID, MoveTransportData)
+export const MoveTransformComponent = engine.defineComponent(getNextComponentId(), MoveTransportData)
+export const MoveTransformFinishedComponent = engine.defineComponent(
+  getNextComponentId(),
+  MapType({ flag: EcsBoolean })
+)

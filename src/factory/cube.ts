@@ -1,8 +1,6 @@
-import { SpawnerComponent } from './components/spawner'
+const { Transform: TransformC, BoxShape, AudioSource } = engine.baseComponents
 
-const { Transform: TransformC, BoxShape, AudioSource, OnPointerDown } = engine.baseComponents
-
-export function createCube(x: number, y: number, z: number, spawner = true): Entity {
+export function createCube(x: number, y: number, z: number): Entity {
   const entity = engine.addEntity()
 
   TransformC.create(entity, {
@@ -17,16 +15,6 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
     visible: true,
     uvs: []
   })
-
-  if (spawner) {
-    OnPointerDown.create(entity, {
-      button: 1,
-      hoverText: 'Click to spawn',
-      distance: 100,
-      showFeedback: true
-    })
-    SpawnerComponent.create(entity, { lastPointerDownTs: 1 })
-  }
 
   AudioSource.create(entity, {
     audioClipUrl: 'sounds/pickUp.mp3',

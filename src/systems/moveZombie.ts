@@ -1,13 +1,8 @@
-import { MoveTransformComponent } from '../components/moveTransport'
+import { MoveTransformComponent, MoveTransformFinishedComponent } from '../components/moveTransport'
 import { Interpolate } from '../helper/interpolation'
+import { ensureGameController } from './game'
 
 const { Transform } = engine.baseComponents
-
-const callbackMap = new Map<Entity, () => void>()
-
-export function onMoveZombieFinish(entity: Entity, callback: () => void) {
-  callbackMap.set(entity, callback)
-}
 
 export function moveSystem(dt: number) {
   for (const [entity, move, transform] of engine.mutableGroupOf(MoveTransformComponent, Transform)) {
@@ -17,13 +12,37 @@ export function moveSystem(dt: number) {
     // assign value to transform
     transform.position = Vector3.lerp(move.start, move.end, move.lerpTime)
 
-    // has finished
-    move.hasFinished = move.normalizedTime >= 1
-
-    if (move.hasFinished) {
-      const fn = callbackMap.get(entity)
-      if (fn) fn()
+    const hasFinished = move.normalizedTime >= 1
+    if (hasFinished) {
       MoveTransformComponent.deleteFrom(entity)
+      MoveTransformFinishedComponent.create(entity)
     }
+  }
+
+  for (const [zombieEntity] of engine.groupOf(MoveTransformFinishedComponent, Transform)) {
+    dcl.log('finished zombie', zombieEntity)
+    ensureGameController().livesLeft -= 1
+
+    const animator = engine.baseComponents.Animator.mutable(zombieEntity)
+    const walkAnim = animator.states[0] // animator.states.find( (anim) =>{anim.clip=="Walking"})
+    const attackAnim = animator.states[1] //animator.states.find( (anim) =>{anim.clip=="Attacking"})
+    if (walkAnim && attackAnim) {
+      walkAnim.playing = false
+      walkAnim.loop = false
+      attackAnim.playing = true
+      attackAnim.loop = true
+    }
+
+    const nfts = engine.groupOf(engine.baseComponents.NFTShape)
+
+    //only remove first
+    for (const [entity] of nfts) {
+      engine.removeEntity(entity)
+      break
+    }
+
+    // TODO:
+    // playSound(zombieEntity, 'sounds/attack.mp3', true)
+    MoveTransformFinishedComponent.deleteFrom(zombieEntity)
   }
 }

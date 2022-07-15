@@ -1,4 +1,4 @@
-const { Transform: TransformC, CylinderShape } = engine.baseComponents
+const { Transform: TransformC, CylinderShape, OnPointerDown } = engine.baseComponents
 
 export function createCone() {
   const cone = engine.addEntity()
@@ -15,6 +15,13 @@ export function createCone() {
     visible: true,
     radiusTop: 0,
     radiusBottom: 1
+  })
+
+  OnPointerDown.create(cone, {
+    button: 0,
+    distance: 100,
+    hoverText: 'click',
+    showFeedback: true
   })
   return cone
 }
