@@ -102,12 +102,13 @@ VelocityComponenty.deleteFrom(entity)
 
 
 ## System
-Systems are pure simple functions.
-All your game logic comes here.
-A system might hold data which is relevant to the system itself, but no data about the entities it processes
+Systems are pure & simple functions.
+All your logic comes here.
+A system might hold data which is relevant to the system itself, but no data about the entities it processes.
 
 ### Query components
-The way to group/query the components inside systems is using the method groupOf. `engine.groupOf(...components)`.
+The way to group/query the components inside systems is using the method groupOf.
+`engine.groupOf(...components)`.
 
 
 ```ts
