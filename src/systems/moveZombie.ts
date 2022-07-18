@@ -3,12 +3,6 @@ import { Interpolate } from '../helper/interpolation'
 
 const { Transform } = engine.baseComponents
 
-const callbackMap = new Map<Entity, () => void>()
-
-export function onMoveZombieFinish(entity: Entity, callback: () => void) {
-  callbackMap.set(entity, callback)
-}
-
 export function moveSystem(dt: number) {
   for (const [entity, move, transform] of engine.mutableGroupOf(MoveTransformComponent, Transform)) {
     move.normalizedTime = Math.min(Math.max(move.normalizedTime + dt * move.speed, 0), 1)
@@ -21,8 +15,6 @@ export function moveSystem(dt: number) {
     move.hasFinished = move.normalizedTime >= 1
 
     if (move.hasFinished) {
-      const fn = callbackMap.get(entity)
-      if (fn) fn()
       MoveTransformComponent.deleteFrom(entity)
     }
   }

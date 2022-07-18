@@ -1,9 +1,11 @@
-import { SpawnerComponent } from './components/spawner'
+import { CubeIdentifierComponent } from './components/cube'
 
 const { Transform: TransformC, BoxShape, AudioSource, OnPointerDown } = engine.baseComponents
 
 export function createCube(x: number, y: number, z: number, spawner = true): Entity {
   const entity = engine.addEntity()
+
+  CubeIdentifierComponent.create(entity, { id: entity })
 
   TransformC.create(entity, {
     position: { x, y, z },
@@ -25,7 +27,6 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
       distance: 100,
       showFeedback: true
     })
-    SpawnerComponent.create(entity, { lastPointerDownTs: 1 })
   }
 
   AudioSource.create(entity, {
