@@ -10,7 +10,7 @@ To run this scene, you must use the following commands instead of the typical `d
 
 # ECS 7
 
-## Entity
+## Entites
 
 An Entity is just an ID. It is an abstract concept not represented by any data structure. There is no "class Entity". Just a number that is used as a reference to group different components.
 
@@ -24,10 +24,25 @@ engine.removeEntity(myEntity)
 
 > Note: Note that it's no longer necessary to separately create an entity and then add it to the engine, this is all done in a single act.
 
-## Component
+## Components
 
 The component is just a data container, WITHOUT any functions.
-Each component may reference an Entity.
+
+To add a component to an entity, the entry point is now the component type, not the entity.
+
+```ts
+Transform.create(myEntity, <params>)
+```
+
+This is different from how the syntax was in SDK6:
+
+```ts
+// OLD Syntax
+myEntity.addComponent(Transform)
+```
+
+
+
 
 ### Base Components
 
@@ -73,7 +88,7 @@ GLTFShape.create(zombie, {
 ```
 
 
-### Custom Component
+### Custom Components
 
 Each component must have a unique number ID. If a number is repeated, the engine or another player receiving updates might apply changes to the wrong component. Note that numbers 1-1000 are reserved for the base components.
 
@@ -161,7 +176,7 @@ VelocityComponenty.deleteFrom(entity)
 
 
 
-## System
+## Systems
 
 Systems are pure & simple functions.
 All your logic comes here.
