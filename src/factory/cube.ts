@@ -1,7 +1,11 @@
-const { Transform: TransformC, BoxShape, AudioSource } = engine.baseComponents
+import { CubeIdentifierComponent } from './components/cube'
 
-export function createCube(x: number, y: number, z: number): Entity {
+const { Transform: TransformC, BoxShape, AudioSource, OnPointerDown } = engine.baseComponents
+
+export function createCube(x: number, y: number, z: number, spawner = true): Entity {
   const entity = engine.addEntity()
+
+  CubeIdentifierComponent.create(entity, { id: entity })
 
   TransformC.create(entity, {
     position: { x, y, z },
@@ -15,6 +19,15 @@ export function createCube(x: number, y: number, z: number): Entity {
     visible: true,
     uvs: []
   })
+
+  if (spawner) {
+    OnPointerDown.create(entity, {
+      button: 1,
+      hoverText: 'Press E to spawn',
+      distance: 100,
+      showFeedback: true
+    })
+  }
 
   AudioSource.create(entity, {
     audioClipUrl: 'sounds/pickUp.mp3',
