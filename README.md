@@ -31,7 +31,30 @@ Each component may reference an Entity.
 
 ### Base Components
 
-Base components already come packed as part of the SDK, they include common functionalities like Transform or GLTFShape.
+Base components already come packed as part of the SDK. Most of them interact directly with the renderer in some way. This is the full list of currently supported base components:
+
+- Animator
+- AudioSource
+- AudioStream
+- AvatarAttach
+- AvatarModifierArea
+- Billboard
+- BoxShape
+- CameraModeArea
+- CylinderShape
+- GLTFShape
+- NFTShape
+- OnPointerDown
+- OnPointerDownResult
+- OnPointerUp
+- OnPointerUpResult
+- PlaneShape
+- SphereShape
+- TextShape
+- Transform
+
+> Note: Both `OnPointerDownResult` and `OnPointerUpResult` are not meant to be explicitly added to an entity in code. They are added by the engine as a result of a player's interaction.
+
 
 ```ts
 const { Transform, GLFTShape } = engine.baseComponents
@@ -188,7 +211,19 @@ engine.removeSystem(physicsSystem)
 ```
 
 ## Mutability
-Mutability is now an important distinction.
 
-We can choose to deal with mutable or with immutable versions of a component. We should use `mutable` only when we plan to make changes to a component.
-This results in a huge gain in performance.
+Mutability is now an important distinction. We can choose to deal with mutable or with immutable versions of a component. We should use `mutable` only when we plan to make changes to a component. Dealing with immutable versions of components results in a huge gain in performance.
+
+The `.getFrom()` function in a component returns an immutable version of the component. You can only read its values, but can't change any of the properties on it.
+
+```ts
+const immutableTransform = baseComponents.Transform.getFrom(myEntity)
+```
+
+To fetch the mutable version of a component, call it via `ComopnentType.mutable()`. For example:
+
+```ts
+const mutableTransform = baseComponents.Transform.mutable(myEntity)
+```
+
+
