@@ -6,27 +6,12 @@ const { OnPointerDownResult } = engine.baseComponents
 const callbackMap = new Map<Entity, (entity:Entity) => void>()
 
 
-export const ClickableComponent = engine.defineComponent(
-  3000,
-  MapType({
-    lastPointerDownTs: Int32
-  })
-)
-
 export function clickedSystem(dt: number) {
-  const clickedBoshapes = engine.groupOf(ClickableComponent, OnPointerDownResult)
+  const clickedBoshapes = engine.groupOf(OnPointerDownResult)
 
-  for (const [entity, clickable, pointerDownResult] of clickedBoshapes) {
-     if ( clickable.lastPointerDownTs !== pointerDownResult.timestamp) {
-
+  for (const [entity, pointerDownResult] of clickedBoshapes) {
 		const fn = callbackMap.get(entity)
 		if (fn) fn(entity)
-
-		ClickableComponent.mutable(entity).lastPointerDownTs = pointerDownResult.timestamp
-
-		//engine.baseComponents.OnPointerDownResult.deleteFrom(entity)
-		
-     }
   }
 }
 
@@ -42,7 +27,6 @@ export function addClickBehavior (entity:Entity, fn:(entity:Entity) => void ) {
 	})
 	callbackMap.set(entity, fn)
 	
-	ClickableComponent.create(entity, {lastPointerDownTs:0})
 
 	return entity
 }

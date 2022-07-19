@@ -12,7 +12,7 @@ export function playSounds(dt: number, state: State) {
   const entitiesWSound = engine.mutableGroupOf(engine.baseComponents.AudioSource)
   for (const [_entity, audioSource] of entitiesWSound) {
     audioSource.volume = 1
-    audioSource.playedAtTimestamp = Date.now()
+    // audioSource.playedAtTimestamp = Date.now()
     audioSource.pitch = Math.random() * 5
     audioSource.playing = true
   }
@@ -29,7 +29,7 @@ export function playSound(entity: Entity, soundPath: string, rndPitch?: boolean)
 	){
 		let source = engine.baseComponents.AudioSource.mutable(entity)
 		source.audioClipUrl = soundPath,
-		source.playedAtTimestamp = Date.now(),
+		// source.playedAtTimestamp = Date.now(),
 		source.loop = false
 		source.playing = true
 		source.pitch = pitch
@@ -41,7 +41,7 @@ export function playSound(entity: Entity, soundPath: string, rndPitch?: boolean)
 			pitch: pitch,
 			playing: true,
 			volume: 1,
-			playedAtTimestamp: Date.now()
+			// playedAtTimestamp: Date.now()
 		  })
 	}
 

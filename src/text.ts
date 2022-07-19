@@ -4,7 +4,7 @@ export function createText(value: string): Entity {
   const text = engine.addEntity()
 
   Transform.create(text, {
-    position: { x: 10, y: 1, z: 10 },
+    position: { x: 0, y: 1, z: 0 },
     scale: { x: 1, y: 1, z: 1 },
     rotation: { x: 0, y: 0, z: 0, w: 1 }
   })
