@@ -10,7 +10,7 @@ To run this scene, you must use the following commands instead of the typical `d
 
 # ECS 7
 
-## Entites
+## Entities
 
 An Entity is just an ID. It is an abstract concept not represented by any data structure. There is no "class Entity". Just a number that is used as a reference to group different components.
 
@@ -238,7 +238,7 @@ const mutableTransform = baseComponents.Transform.mutable(myEntity)
 ```
 
 
-## Well Known Issues
+## Known Issues
 
 - Collisions don’t work with any shape
 - Entities with a TextShape might not correctly appear in the position indicated by the Transform
