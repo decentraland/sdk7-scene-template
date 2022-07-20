@@ -12,7 +12,6 @@ export function playSounds(dt: number, state: State) {
   const entitiesWSound = engine.mutableGroupOf(engine.baseComponents.AudioSource)
   for (const [_entity, audioSource] of entitiesWSound) {
     audioSource.volume = 1
-    audioSource.playedAtTimestamp = Date.now()
     audioSource.pitch = Math.random() * 5
     audioSource.playing = true
   }

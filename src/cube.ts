@@ -22,7 +22,7 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
 
   if (spawner) {
     OnPointerDown.create(entity, {
-      button: 1,
+      button: ActionButton.PRIMARY,
       hoverText: 'Press E to spawn',
       distance: 100,
       showFeedback: true
@@ -34,8 +34,7 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
     loop: false,
     pitch: 1,
     playing: false,
-    volume: 1,
-    playedAtTimestamp: 1
+    volume: 1
   })
 
   return entity
