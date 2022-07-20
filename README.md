@@ -50,12 +50,8 @@ Base components already come packed as part of the SDK. Most of them interact di
 
 - Animator
 - AudioSource
-- AudioStream
 - AvatarAttach
-- AvatarModifierArea
-- Billboard
 - BoxShape
-- CameraModeArea
 - CylinderShape
 - GLTFShape
 - NFTShape
