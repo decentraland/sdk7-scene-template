@@ -238,3 +238,8 @@ const mutableTransform = baseComponents.Transform.mutable(myEntity)
 ```
 
 
+## Well Known Issues
+
+- Collisions don’t work with any shape
+- Entities with a TextShape might not correctly appear in the position indicated by the Transform
+- Sometimes GLTF entities aren’t rendered by the engine
