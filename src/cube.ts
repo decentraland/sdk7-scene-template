@@ -35,7 +35,7 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
     pitch: 1,
     playing: false,
     volume: 1,
-    playedAtTimestamp: 1
+    // playedAtTimestamp: 1
   })
 
   return entity
