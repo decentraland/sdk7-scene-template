@@ -41,5 +41,8 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
     // playedAtTimestamp: 1
   })
 
+//   engine.baseComponents.CameraModeArea.create(entity, {mode: CameraMode.THIRD_PERSON, area: {x:6, y: 6, z: 6}})
+
+
   return entity
 }

@@ -87,20 +87,17 @@ addClickBehavior(coneEntity, ()=>{
 
 const textEntity = createText("Click Cone to Play")
 
-engine.baseComponents.Transform.mutable(textEntity).parent = coneEntity
+ engine.baseComponents.Transform.mutable(textEntity).parent = coneEntity
 
-engine.baseComponents.Billboard.create(textEntity, {x: true, y: true, z: true})
+// engine.baseComponents.Billboard.create(textEntity, {x: true, y: true, z: true})
 
-const simpleCube = createCube(0, 2, 0)
+const simpleCube = createCube(8, 2, 8)
 engine.baseComponents.Transform.mutable(simpleCube).parent = coneEntity
 
-engine.baseComponents.Billboard.create(simpleCube, {x: true, y: true, z: true})
+// engine.baseComponents.Billboard.create(simpleCube, {x: true, y: true, z: true})
+engine.baseComponents.CameraModeArea.create(coneEntity, {mode: CameraMode.THIRD_PERSON, area: {x:6, y: 6, z: 6}})
 
-//engine.baseComponents.CameraModeArea.create(coneEntity, {mode: 0, area: {x:3, y: 3, z: 3}})
-
-//engine.baseComponents.AvatarModifierArea.create(coneEntity, {  modifiers: [2]	 , area: {x:10, y: 10, z: 10}, excludeIds: [] })
-
-// engine.baseComponents.CameraModeArea.create(coneEntity, {mode: PBCameraModeArea_CameraMode.FIRST_PERSON, area: {x:3, y: 3, z: 3}})
+// engine.baseComponents.AvatarModifierArea.create(coneEntity, {  modifiers: [2]	 , area: {x:10, y: 10, z: 10}, excludeIds: [] })
 
 // engine.baseComponents.AvatarModifierArea.create(coneEntity, {  modifiers: [PBAvatarModifierArea_Modifier.HIDE_AVATARS] , area: {x:10, y: 10, z: 10}, excludeIds: [] })
 
