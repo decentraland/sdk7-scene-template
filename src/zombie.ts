@@ -29,6 +29,10 @@ export function createZombie(): Entity {
     hasFinished: false,
     interpolationType: 15
   })
+  
+
+  //I can directly assign it here
+  moveTransportComponent.speed = 2 
 
   return zombie
 }
