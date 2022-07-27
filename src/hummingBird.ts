@@ -14,7 +14,7 @@ export function createHummingBird(){
 	const bird = engine.addEntity()
 	engine.baseComponents.Transform.create(bird, {
 		position: {x:13, y:3.5, z:5},
-		rotation: {x:0, y:0, z:0, w: 0},
+		rotation: {x:0, y:0, z:0, w: 1},
 		scale:  {x:0.2, y:0.2, z:0.2}
 	})
 	engine.baseComponents.GLTFShape.create(bird, {
@@ -63,13 +63,14 @@ export function createHummingBird(){
 export function birdSystem(dt: number){
 
 
-	for (const [bird, birdData, transform] of engine.mutableGroupOf(isBird, engine.baseComponents.Transform)) {
+	for (const [bird, birdData] of engine.mutableGroupOf(isBird)) {
 	
 		if( MoveTransformComponent.has(bird)) return
 		
 			birdData.waitingTime -=dt
 			if(birdData.waitingTime<= 0){
 
+				let currentPos =  engine.baseComponents.Transform.getFrom(bird).position
 			
 
 				birdData.waitingTime = 2
@@ -86,17 +87,25 @@ export function birdSystem(dt: number){
 				MoveTransformComponent.create(bird, {
 					hasFinished: false,
 					duration: 2,
-					start: transform.position,
+					start:currentPos,
 					end: nextPos,
-					normalizedTime: 2,
-					lerpTime: 2,
+					normalizedTime: 0,
+					lerpTime: 0,
 					speed: 1,
 					interpolationType: 0
+				
 				})
 
 				const mutableTransform = engine.baseComponents.Transform.mutable(bird)
 
-				mutableTransform.rotation = Quaternion.lookRotation( transform.position, nextPos)
+				
+				Vector3.Up()
+
+		
+
+				mutableTransform.rotation = Quaternion.rotateTowards(mutableTransform.position, nextPos, 360)
+				
+				//Quaternion.lookRotation( mutableTransform.position, nextPos)
 			}
 	  }
 }
