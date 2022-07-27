@@ -13,18 +13,11 @@ export class EntityWrapper{
     }
 
     getComponentM<T extends EcsType = EcsType<any>>(comp:ComponentDefinition<T>):ComponentType<T>{
-        //if(mutable===undefined || mutable){
-            return comp.mutable(this.entity)
-        //}else{
-            //return comp.getFrom(this.entity)
-        //}
+        return comp.mutable(this.entity)
+
     }
     getComponentR<T extends EcsType = EcsType<any>>(comp:ComponentDefinition<T>):DeepReadonly<ComponentType<T>>{
-        //if(mutable===undefined || mutable){
-            //return comp.mutable(this.entity)
-        //}else{
-            return comp.getFrom(this.entity)
-        //}
+        return comp.getFrom(this.entity)
     }
     addComponent<T extends EcsType = EcsType<any>>(comp:ComponentDefinition<T>,val?: ComponentType<T>){
         return comp.create(this.entity,val)
