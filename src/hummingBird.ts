@@ -103,7 +103,7 @@ export function birdSystem(dt: number){
 
 		
 
-				mutableTransform.rotation = Quaternion.rotateTowards(mutableTransform.position, nextPos, 360)
+				//mutableTransform.rotation = Quaternion.ro
 				
 				//Quaternion.lookRotation( mutableTransform.position, nextPos)
 			}

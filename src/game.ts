@@ -55,7 +55,16 @@ export function clickTree(){
 		createHummingBird()
 		let anim = engine.baseComponents.Animator.mutable(tree)
 		anim.states[0].playing = true
+
+
 	}
+
+	
 }
 
 engine.addSystem(clickTree)
+
+
+
+
+
