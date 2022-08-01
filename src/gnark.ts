@@ -13,11 +13,10 @@ const TURN_TIME = 0.9
 
 const { Transform, GLTFShape } = engine.baseComponents
 import { MoveTransformComponent } from './components/moveTransport'
-import { NPComponent } from "./components/NPC"
+import { gnarkStates, NPComponent } from "./components/NPC"
 import { PathDataComponent } from './components/pathData'
 import { TimeOutComponent } from "./components/timeOut"
-import { onMoveFinish } from "./systems/moveSystem"
-import { onTimeUp } from "./systems/timeOutSystem"
+
 
 
 export function createGnark(): Entity {
@@ -40,34 +39,34 @@ export function createGnark(): Entity {
 	})
 
 	engine.baseComponents.Animator.create(gnark, {states:[{
-		name: "walk",
-		clip: "walk",
-		playing: true,
-		weight: 1,
-		speed: 1,
-		loop: true,
-		shouldReset: false
-	}, {
-		name: "turnRight",
-		clip: "turnRight",
-		playing: false,
-		weight: 1,
-		speed: 1,
-		loop: false,
-		shouldReset: true
-	},
-	{
-		name: "raiseDead",
-		clip: "raiseDead",
-		playing: false,
-		weight: 1,
-		speed: 1,
-		loop: true,
-		shouldReset: false
-	}
-]})
+			name: "walk",
+			clip: "walk",
+			playing: true,
+			weight: 1,
+			speed: 1,
+			loop: true,
+			shouldReset: false
+		}, {
+			name: "turnRight",
+			clip: "turnRight",
+			playing: false,
+			weight: 1,
+			speed: 1,
+			loop: false,
+			shouldReset: true
+		},
+		{
+			name: "raiseDead",
+			clip: "raiseDead",
+			playing: false,
+			weight: 1,
+			speed: 1,
+			loop: true,
+			shouldReset: true
+		}
+	]})
 
-	NPComponent.create(gnark, true)
+	NPComponent.create(gnark, {state: gnarkStates.WALKING, previousState: gnarkStates.WALKING})
 
 	const randomPathStart = Math.floor(Math.random()*3)
 
@@ -89,67 +88,13 @@ export function createGnark(): Entity {
 	  interpolationType: 1
 	})
 
-
-
-	onMoveFinish(gnark, () => {
-
-		const animator = engine.baseComponents.Animator.mutable(gnark)
-
-		 const walkAnim = animator.states.find( (anim) =>{return anim.name=="walk"})
-		 const turnAnim = animator.states.find( (anim) =>{return anim.name=="turnRight"})
-
-		// const walkAnim = animator.states[0]
-		// const turnAnim = animator.states[1]
-
-
-		if(!walkAnim || !turnAnim) return
-
-		walkAnim.playing = false
-		turnAnim.playing = true
-
-		TimeOutComponent.create(gnark, {
-			timeLeft:0.9,
-			hasFinished: false,
-			paused: false
-		})
-
-
-		onTimeUp(gnark, ()=>{
-			walkAnim.playing = true
-			turnAnim.playing = false
-			nextSegment(gnark)
-		})
-
-		
-	  })
-
-
+	TimeOutComponent.create(gnark, {
+		timeLeft:0.9,
+		hasFinished: false,
+		paused: false
+	})
   
 	return gnark
   }
 
   
-  function nextSegment(gnark:Entity){
-
-	let path = PathDataComponent.mutable(gnark)
-		path.origin += 1
-		path.target += 1
-		if (path.target >= path.path.length) {
-			path.target = 0
-		  } else if (path.origin >= path.path.length) {
-			path.origin = 0
-		  }
-	
-		  MoveTransformComponent.create(gnark, {
-			start: path.path[path.origin],
-			end: path.path[path.target],
-			duration: 10,
-			normalizedTime: 0,
-			lerpTime: 0,
-			speed: 0.1,
-			hasFinished: false,
-			interpolationType: 1
-		  })
-	
-		  engine.baseComponents.Transform.mutable(gnark).rotation.y += 90
-  }

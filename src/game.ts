@@ -10,6 +10,7 @@ import { moveSystem, onMoveFinish } from './systems/moveSystem'
 import { createGLTF } from './gltf'
 import { createGnark } from './gnark'
 import { timerSystem } from './systems/timeOutSystem'
+import { distanceSystem, walkAround } from './systems/gnarkAI'
 
 // const _cubeEntity = createCube(8, 2, 8)
 // const _coneEntity = createCone()
@@ -33,7 +34,9 @@ const gnark2=  createGnark()
 
 // addStateSystem(circularSystem, { t: 0 })
 // addStateSystem(playSounds, { t: 0 })
- engine.addSystem(moveSystem)
+//  engine.addSystem(moveSystem)
 
- engine.addSystem(timerSystem)
+//  engine.addSystem(timerSystem)
 
+engine.addSystem(walkAround)
+engine.addSystem(distanceSystem)
