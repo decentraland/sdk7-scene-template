@@ -5,7 +5,7 @@ const point1 = {x:8, y:0, z:8}
 const point2 = {x:8, y:0, z:24}
 const point3 = {x:24,y: 0,z: 24}
 const point4 = {x:24,y: 0,z: 8}
-//  const path: Vector3EcsType[] = [point1, point2, point3, point4]
+const pathArray= [point1, point2, point3, point4]
 
 
 const TURN_TIME = 0.9
@@ -13,6 +13,7 @@ const TURN_TIME = 0.9
 
 const { Transform, GLTFShape } = engine.baseComponents
 import { MoveTransformComponent } from './components/moveTransport'
+import { NPComponent } from "./components/NPC"
 import { PathDataComponent } from './components/pathData'
 import { TimeOutComponent } from "./components/timeOut"
 import { onMoveFinish } from "./systems/moveSystem"
@@ -66,12 +67,15 @@ export function createGnark(): Entity {
 	}
 ]})
 
+	NPComponent.create(gnark, true)
+
+	const randomPathStart = Math.floor(Math.random()*3)
 
 	PathDataComponent.create(gnark,{
-		path: [point1, point2, point3, point4],
+		path: pathArray,
 		paused: false,
-		origin: 0,
-		target: 1
+		origin: randomPathStart,
+		target: randomPathStart + 1
 	})
   
 	MoveTransformComponent.create(gnark, {
@@ -85,15 +89,17 @@ export function createGnark(): Entity {
 	  interpolationType: 1
 	})
 
+
+
 	onMoveFinish(gnark, () => {
 
 		const animator = engine.baseComponents.Animator.mutable(gnark)
 
-		// const walkAnim = animator.states.find( (anim) =>{anim.name=="walk"})
-		// const turnAnim = animator.states.find( (anim) =>{anim.name=="turnRight"})
+		 const walkAnim = animator.states.find( (anim) =>{return anim.name=="walk"})
+		 const turnAnim = animator.states.find( (anim) =>{return anim.name=="turnRight"})
 
-		const walkAnim = animator.states[0]
-		const turnAnim = animator.states[1]
+		// const walkAnim = animator.states[0]
+		// const turnAnim = animator.states[1]
 
 
 		if(!walkAnim || !turnAnim) return
@@ -103,7 +109,8 @@ export function createGnark(): Entity {
 
 		TimeOutComponent.create(gnark, {
 			timeLeft:0.9,
-			hasFinished: false
+			hasFinished: false,
+			paused: false
 		})
 
 
@@ -115,6 +122,7 @@ export function createGnark(): Entity {
 
 		
 	  })
+
 
   
 	return gnark

@@ -25,6 +25,8 @@ let temple = createGLTF({
 
 const gnark=  createGnark()
 
+const gnark2=  createGnark()
+
 // const zombie = createZombie()
 
 
@@ -34,3 +36,4 @@ const gnark=  createGnark()
  engine.addSystem(moveSystem)
 
  engine.addSystem(timerSystem)
+

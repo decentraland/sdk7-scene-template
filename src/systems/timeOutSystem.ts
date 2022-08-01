@@ -11,6 +11,7 @@ export function onTimeUp(entity: Entity, callback: () => void) {
 export function timerSystem(dt: number) {
   for (const [entity, timer] of engine.mutableGroupOf(TimeOutComponent)) {
 
+	if(timer.paused) return
 
     timer.timeLeft = timer.timeLeft - dt
 

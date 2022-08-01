@@ -19,7 +19,8 @@ const COMPONENT_ID = 2048
 const TimeOut = MapType({
  
   timeLeft: Float32,
-  hasFinished: EcsBoolean
+  hasFinished: EcsBoolean,
+  paused: EcsBoolean
   
 })
 

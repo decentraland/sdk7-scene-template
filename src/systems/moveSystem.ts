@@ -1,4 +1,5 @@
 import { MoveTransformComponent } from '../components/moveTransport'
+import { PathDataComponent } from '../components/pathData'
 import { Interpolate } from '../helper/interpolation'
 
 const { Transform } = engine.baseComponents
@@ -10,7 +11,14 @@ export function onMoveFinish(entity: Entity, callback: () => void) {
 }
 
 export function moveSystem(dt: number) {
-  for (const [entity, move, transform] of engine.mutableGroupOf(MoveTransformComponent, Transform)) {
+  for (const [entity,  path] of engine.groupOf( PathDataComponent)) {
+
+	if(path.paused) return
+
+	const move = MoveTransformComponent.mutable(entity)
+	const transform = engine.baseComponents.Transform.mutable(entity)
+
+
     move.normalizedTime = Math.min(Math.max(move.normalizedTime + dt * move.speed, 0), 1)
     move.lerpTime = Interpolate(move.interpolationType, move.normalizedTime)
 

@@ -21,7 +21,7 @@ export function createCube(x: number, y: number, z: number): Entity {
     pitch: 1,
     playing: false,
     volume: 1,
-    playedAtTimestamp: 1
+    // playedAtTimestamp: 1
   })
 
   return entity
