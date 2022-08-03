@@ -1,3 +1,7 @@
 import { ui } from './ui'
+import {createCube} from "./cube";
 
-engine.renderUI(ui())
+createCube(8,1,8)
+
+
+//engine.renderUI(ui())
