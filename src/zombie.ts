@@ -12,9 +12,6 @@ export function createZombie(): Entity {
   })
 
   GLTFShape.create(zombie, {
-    withCollisions: true,
-    isPointerBlocker: true,
-    visible: true,
     src: 'models/zombie.glb'
   })
 
