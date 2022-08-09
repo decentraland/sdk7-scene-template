@@ -8,7 +8,7 @@ import { createText } from './text'
 import { createZombie } from './zombie'
 import { moveSystem, onMoveFinish } from './systems/moveSystem'
 import { createGLTF } from './gltf'
-import { createGnark } from './gnark'
+import { createDog } from './dog'
 import { timerSystem } from './systems/timeOutSystem'
 import { distanceSystem, walkAround } from './systems/gnarkAI'
 
@@ -17,26 +17,29 @@ import { distanceSystem, walkAround } from './systems/gnarkAI'
 // const _nftEntity = createNft()
 // const _textEntity = createText()
 
-let temple = createGLTF({
-    position: {x:16,y: 0, z:16},
+let garden = createGLTF({
+    position: {x:8,y: 0, z:8},
     scale: {x:1.6, y:1.6, z:1.6},
 	rotation: {x:0, y:180, z:0, w:1}
-  }, "models/Temple.glb")
+  }, "models/garden.glb")
 
+  let bowl = createGLTF({
+    position: {x:9,y: 0, z:1},
+    scale: {x:1, y:1, z:1},
+	rotation: {x:0, y:180, z:0, w:1}
+  }, "models/BlockDogBowl.gltf")
 
-const gnark=  createGnark()
+  engine.baseComponents.OnPointerDown.create(bowl,{
+	button: ActionButton.PRIMARY,
+	distance: 10,
+	hoverText: "Drink",
+	showFeedback: true
+  })
 
-const gnark2=  createGnark()
+const dog=  createDog()
 
-// const zombie = createZombie()
+const dog2=  createDog()
 
-
-
-// addStateSystem(circularSystem, { t: 0 })
-// addStateSystem(playSounds, { t: 0 })
-//  engine.addSystem(moveSystem)
-
-//  engine.addSystem(timerSystem)
 
 engine.addSystem(walkAround)
 engine.addSystem(distanceSystem)
