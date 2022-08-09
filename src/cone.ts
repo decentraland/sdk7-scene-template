@@ -10,9 +10,6 @@ export function createCone() {
   })
 
   CylinderShape.create(cone, {
-    withCollisions: true,
-    isPointerBlocker: true,
-    visible: true,
     radiusTop: 0,
     radiusBottom: 1
   })

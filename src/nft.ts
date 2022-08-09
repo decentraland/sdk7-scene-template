@@ -10,9 +10,6 @@ export function createNft(): Entity {
   })
 
   NFTShape.create(nft, {
-    withCollisions: true,
-    isPointerBlocker: true,
-    visible: true,
     assetId: '',
     color: { r: 1, g: 1, b: 1 },
     style: 4,

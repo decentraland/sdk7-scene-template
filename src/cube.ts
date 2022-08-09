@@ -13,28 +13,17 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
     rotation: { x: 0, y: 0, z: 0, w: 1 }
   })
 
-  BoxShape.create(entity, {
-    withCollisions: true,
-    isPointerBlocker: true,
-    visible: true,
-    uvs: []
-  })
+  BoxShape.create(entity)
 
   if (spawner) {
     OnPointerDown.create(entity, {
       button: ActionButton.PRIMARY,
-      hoverText: 'Press E to spawn',
-      distance: 100,
-      showFeedback: true
+      hoverText: 'Press E to spawn'
     })
   }
 
   AudioSource.create(entity, {
-    audioClipUrl: 'sounds/pickUp.mp3',
-    loop: false,
-    pitch: 1,
-    playing: false,
-    volume: 1
+    audioClipUrl: 'sounds/pickUp.mp3'
   })
 
   return entity
