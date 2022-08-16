@@ -1,5 +1,3 @@
-const { BoxShape, Transform } = engine.baseComponents
-
 export function circularSystem(dt: number) {
   const entitiesWithBoxShapes = engine.groupOf(BoxShape, Transform)
   for (const [entity, _boxShape, _transform] of entitiesWithBoxShapes) {

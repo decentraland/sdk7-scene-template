@@ -1,7 +1,5 @@
 import { MoveTransformComponent } from './components/moveTransport'
 
-const { Transform, GLTFShape } = engine.baseComponents
-
 export function createZombie(): Entity {
   const zombie = engine.addEntity()
 

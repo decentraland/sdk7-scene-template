@@ -28,7 +28,7 @@ export enum InterpolationType {
 /**
  * @public
  */
-export declare const EcsInterpolation: EcsType<InterpolationType>
+export const InterpolationSchema = Schemas.Enum<InterpolationType>(Schemas.Number)
 
 /**
  * @public

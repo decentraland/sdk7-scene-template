@@ -1,20 +1,20 @@
 // TODO: use higher number so we dont have conflicts (i.e. > 2000)
 const COMPONENT_ID = 2046
-const Vector3EcsType = MapType({
-  x: Float32,
-  y: Float32,
-  z: Float32
+const Vector3Schema = Schemas.Map({
+  x: Schemas.Number,
+  y: Schemas.Number,
+  z: Schemas.Number
 })
 
-const MoveTransportData = MapType({
-  hasFinished: EcsBoolean,
-  duration: Float32,
-  start: Vector3EcsType,
-  end: Vector3EcsType,
-  normalizedTime: Float32,
-  lerpTime: Float32,
-  speed: Float32,
-  interpolationType: Float32 // EcsInterpolation,
+const MoveTransportData = Schemas.Map({
+  hasFinished: Schemas.Boolean,
+  duration: Schemas.Number,
+  start: Vector3Schema,
+  end: Vector3Schema,
+  normalizedTime: Schemas.Number,
+  lerpTime: Schemas.Number,
+  speed: Schemas.Number,
+  interpolationType: Schemas.Number // EcsInterpolation,
 })
 
 export const MoveTransformComponent = engine.defineComponent(COMPONENT_ID, MoveTransportData)

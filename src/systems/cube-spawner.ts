@@ -1,8 +1,6 @@
 import { CubeIdentifierComponent } from '../components/cube'
 import { createCube } from '../cube'
 
-const { OnPointerDownResult } = engine.baseComponents
-
 export function spawnerSystem() {
   const clickedCubes = engine.groupOf(CubeIdentifierComponent, OnPointerDownResult)
   for (const [_entity, _cube, pointerDownResult] of clickedCubes) {

@@ -1,5 +1,3 @@
-const { Transform, NFTShape } = engine.baseComponents
-
 export function createNft(): Entity {
   const nft = engine.addEntity()
 
