@@ -1,29 +1,26 @@
 import { MoveTransformComponent } from "./components/moveTransport"
 
 
-const BirdData = MapType({
-	waitingTime: Float32
-})
+const BirdData = {
+	waitingTime: Schemas.Int
+}
 
-export const isBird = engine.defineComponent(3333, BirdData )
+export const isBird = engine.defineComponent(BirdData, 3333 )
 
 
 export function createHummingBird(){
 
 
 	const bird = engine.addEntity()
-	engine.baseComponents.Transform.create(bird, {
+	Transform.create(bird, {
 		position: {x:13, y:3.5, z:5},
 		rotation: {x:0, y:0, z:0, w: 1},
 		scale:  {x:0.2, y:0.2, z:0.2}
 	})
-	engine.baseComponents.GLTFShape.create(bird, {
-		src:'models/hummingbird.glb',
-		isPointerBlocker: true,
-		visible: true,
-		withCollisions: true
+	GLTFShape.create(bird, {
+		src:'models/hummingbird.glb'
 	})
-	engine.baseComponents.Animator.create(bird, {
+	Animator.create(bird, {
 		states:[
 			{
 				clip: "fly",
@@ -31,7 +28,6 @@ export function createHummingBird(){
 				playing: true,
 				shouldReset: false,
 				speed: 2,
-				weight: 1,
 				name: "fly" 
 			},
 			{
@@ -39,8 +35,6 @@ export function createHummingBird(){
 				loop: false,
 				playing: false,
 				shouldReset: false,
-				speed: 1,
-				weight: 1,
 				name: "look" 
 			},
 			{
@@ -48,8 +42,6 @@ export function createHummingBird(){
 				loop: false,
 				playing: false,
 				shouldReset: false,
-				speed: 1,
-				weight: 1,
 				name: "shake" 
 			}
 		]
@@ -63,16 +55,17 @@ export function createHummingBird(){
 export function birdSystem(dt: number){
 
 
-	for (const [bird, birdData] of engine.mutableGroupOf(isBird)) {
+	for (const [bird] of engine.getEntitiesWith(isBird)) {
 	
 		if( MoveTransformComponent.has(bird)) return
 		
+			const birdData = isBird.getMutable(bird)
+
 			birdData.waitingTime -=dt
 			if(birdData.waitingTime<= 0){
 
-				let currentPos =  engine.baseComponents.Transform.getFrom(bird).position
+				let currentPos =  engine.baseComponents.Transform.get(bird).position
 			
-
 				birdData.waitingTime = 2
 
 				// next target
@@ -96,12 +89,11 @@ export function birdSystem(dt: number){
 				
 				})
 
-				const mutableTransform = engine.baseComponents.Transform.mutable(bird)
+				const mutableTransform = Transform.getMutable(bird)
 
 				
 				Vector3.Up()
 
-		
 
 				//mutableTransform.rotation = Quaternion.ro
 				
