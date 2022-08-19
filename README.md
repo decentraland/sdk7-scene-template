@@ -2,10 +2,7 @@
 
 This scene is built with the ECS7 in alpha state.
 
-To run this scene, you must use the following commands instead of the typical `dcl start`:
-
-1. Run `npm i`
-2. Run `npm start`
+To run this scene, you need the `next` version of the CLI. You can install it with `npm i -g decentraland@next`. Then, just run the scene with `dcl start`.
 
 
 # ECS 7
