@@ -1,7 +1,7 @@
 const COMPONENT_ID = 2223
 
-const SpawnerComponentType = MapType({
-  lastPointerDownTs: Int32
-})
+const SpawnerComponentType = {
+  lastPointerDownTs: Schemas.Int
+}
 
-export const SpawnerComponent = engine.defineComponent(COMPONENT_ID, SpawnerComponentType)
+export const SpawnerComponent = engine.defineComponent(SpawnerComponentType, COMPONENT_ID)

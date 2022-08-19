@@ -1,9 +1,9 @@
 const { BoxShape, Transform } = engine.baseComponents
 
 export function circularSystem(dt: number) {
-  const entitiesWithBoxShapes = engine.groupOf(BoxShape, Transform)
+  const entitiesWithBoxShapes = engine.getEntitiesWith(BoxShape, Transform)
   for (const [entity, _boxShape, _transform] of entitiesWithBoxShapes) {
-    const mutableTransform = Transform.mutable(entity)
+    const mutableTransform = Transform.getMutable(entity)
 
     mutableTransform.rotation = Quaternion.multiply(
       mutableTransform.rotation,

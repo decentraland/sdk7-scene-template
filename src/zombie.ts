@@ -63,10 +63,10 @@ export function createZombie(xPos:number): Entity {
 		dcl.log('finished zombie', zombie)
 
 		if( GameControllerComponent.has(coneEntity)){
-			GameControllerComponent.mutable(coneEntity).livesLeft -=1
+			GameControllerComponent.getMutable(coneEntity).livesLeft -=1
 		}
 
-		let animator = engine.baseComponents.Animator.mutable(zombie)
+		let animator = engine.baseComponents.Animator.getMutable(zombie)
 		const walkAnim = animator.states[0] // animator.states.find( (anim) =>{return anim.clip=="Walking"})
 		const attackAnim = animator.states[1]//animator.states.find( (anim) =>{ return anim.clip=="Attacking"})
 		if(walkAnim && attackAnim){
@@ -76,7 +76,7 @@ export function createZombie(xPos:number): Entity {
 			attackAnim.loop = true
 		}
 
-		const nfts = engine.groupOf(engine.baseComponents.NFTShape)
+		const nfts = engine.getEntitiesWith(engine.baseComponents.NFTShape)
 		
 		//only remove first
 		for (const [entity, nftShape] of nfts){
@@ -95,7 +95,7 @@ export function createZombie(xPos:number): Entity {
 	  playSound(zombie, 'sounds/explosion.mp3', true)
 
 	  if( GameControllerComponent.has(coneEntity)){
-		GameControllerComponent.mutable(coneEntity).score +=1
+		GameControllerComponent.getMutable(coneEntity).score +=1
 	  }
   })
 

@@ -1,6 +1,6 @@
 import { GameControllerComponent } from '../components/gameController'
 import { MoveTransformComponent } from '../components/moveTransport'
-import { createCube } from '../cube'
+// import { createCube } from '../cube'
 import { coneEntity } from '../game'
 import { createZombie } from '../zombie'
 import { playSound } from './sound'
@@ -12,9 +12,10 @@ import { playSound } from './sound'
 export function zombieSpawnSystem(dt:number) {
 	
 
-  const gameControllers = engine.groupOf(GameControllerComponent)
+  const gameControllers = engine.getEntitiesWith(GameControllerComponent)
 
-  for (const [entity, controller] of gameControllers) {
+  for (const [entity] of gameControllers) {
+	const controller = GameControllerComponent.getMutable(entity)
 	if(!controller.spawnActive) return
 
 	if(controller.livesLeft <= 0){
@@ -26,10 +27,10 @@ export function zombieSpawnSystem(dt:number) {
 			// TOO MANY ZOMBIES
 	//}
 
-	let mutableController = GameControllerComponent.mutable(entity)
-	mutableController.spawnCountDown -= dt
-	if(mutableController.spawnCountDown < 0){
-		mutableController.spawnCountDown = mutableController.spawnInterval
+	
+	controller.spawnCountDown -= dt
+	if(controller.spawnCountDown < 0){
+		controller.spawnCountDown = controller.spawnInterval
 		dcl.log("SPAWNING NEW ZOMBIE")
 		spawnZombie()
 		playSound(entity, 'sounds/pickUp.mp3', true)
@@ -62,10 +63,10 @@ function spawnZombie(){
 
 function endGame(){
 	if( GameControllerComponent.has(coneEntity)){
-		GameControllerComponent.mutable(coneEntity).spawnActive = false
+		GameControllerComponent.getMutable(coneEntity).spawnActive = false
 	  }
 
 	  if( engine.baseComponents.AudioSource.has(coneEntity)){
-		engine.baseComponents.AudioSource.mutable(coneEntity).playing = false
+		engine.baseComponents.AudioSource.getMutable(coneEntity).playing = false
 	  }
 }

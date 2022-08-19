@@ -1,15 +1,15 @@
 
 const COMPONENT_ID = 2066
 
-const GameControlleType = MapType({
-	spawnActive: EcsBoolean,
-	spawnInterval: Int32,
-	spawnCountDown: Int32,
-	livesLeft: Int32,
-	score: Int32,
-	winningScore: Int32,
-	maxZombies: Int32
-  })
+const GameControlleType = {
+	spawnActive: Schemas.Boolean,
+	spawnInterval: Schemas.Float,
+	spawnCountDown: Schemas.Float,
+	livesLeft: Schemas.Int,
+	score: Schemas.Int,
+	winningScore: Schemas.Int,
+	maxZombies: Schemas.Int
+  }
 
 
-export const GameControllerComponent = engine.defineComponent(COMPONENT_ID, GameControlleType)
+export const GameControllerComponent = engine.defineComponent(GameControlleType, COMPONENT_ID)

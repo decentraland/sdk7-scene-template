@@ -1,13 +1,12 @@
 import { circularSystem } from './systems/circular'
 import { playSounds } from './systems/sound'
 import { addStateSystem } from './helper/systemWithState'
-import { createCube } from './cube'
+//import { createCube } from './cube'
 import { createCone } from './cone'
 import { createNft } from './nft'
 import { createText } from './text'
 import { createZombie } from './zombie'
 import { moveSystem, onMoveZombieFinish } from './systems/moveZombie'
-import { spawnerSystem } from './systems/spawner'
 import { addClickBehavior } from './systems/clickable'
 import { MoveTransformComponent } from './components/moveTransport'
 import { GameControllerComponent } from './components/gameController'
@@ -22,7 +21,7 @@ const _SPAWN_INTERVAL = 3
 // addStateSystem(playSounds, { t: 0 })
 // engine.addSystem(circularSystem)
 engine.addSystem(moveSystem)
-engine.addSystem(spawnerSystem)
+
 
 
 export const coneEntity = createCone()
@@ -32,15 +31,15 @@ addClickBehavior(coneEntity, ()=>{
 
 
 	if(GameControllerComponent.has(coneEntity)){
-		if(!GameControllerComponent.getFrom(coneEntity).spawnActive){
-			let controller = GameControllerComponent.mutable(coneEntity)
+		if(!GameControllerComponent.get(coneEntity).spawnActive){
+			let controller = GameControllerComponent.getMutable(coneEntity)
 			controller.spawnActive = true
 			controller.livesLeft = _LIVES
 			controller.score = 0
 
 
 			// clear NFTs
-			const nfts = engine.groupOf(engine.baseComponents.NFTShape)
+			const nfts = engine.getEntitiesWith(engine.baseComponents.NFTShape)
 			for (const [entity, nftShape] of nfts){
 				engine.removeEntity(entity)
 			}
@@ -67,7 +66,7 @@ addClickBehavior(coneEntity, ()=>{
 	}
 
 	if(engine.baseComponents.AudioSource.has(coneEntity)){
-		const source = engine.baseComponents.AudioSource.mutable(coneEntity)
+		const source = engine.baseComponents.AudioSource.getMutable(coneEntity)
 		source.playing = true
 	} else {
 		engine.baseComponents.AudioSource.create(coneEntity,
@@ -87,15 +86,15 @@ addClickBehavior(coneEntity, ()=>{
 
 const textEntity = createText("Click Cone to Play")
 
- engine.baseComponents.Transform.mutable(textEntity).parent = coneEntity
+//  engine.baseComponents.Transform.getMutable(textEntity).parent = coneEntity
 
 // engine.baseComponents.Billboard.create(textEntity, {x: true, y: true, z: true})
 
-const simpleCube = createCube(8, 2, 8)
-engine.baseComponents.Transform.mutable(simpleCube).parent = coneEntity
+// const simpleCube = createCube(8, 2, 8)
+// engine.baseComponents.Transform.getMutable(simpleCube).parent = coneEntity
 
 // engine.baseComponents.Billboard.create(simpleCube, {x: true, y: true, z: true})
-engine.baseComponents.CameraModeArea.create(coneEntity, {mode: CameraMode.THIRD_PERSON, area: {x:6, y: 6, z: 6}})
+// engine.baseComponents.CameraModeArea.create(coneEntity, {mode: CameraModeValue.THIRD_PERSON, area: {x:6, y: 6, z: 6}})
 
 // engine.baseComponents.AvatarModifierArea.create(coneEntity, {  modifiers: [2]	 , area: {x:10, y: 10, z: 10}, excludeIds: [] })
 
