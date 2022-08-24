@@ -2,10 +2,7 @@
 
 This scene is built with the ECS7 in alpha state.
 
-To run this scene, you must use the following commands instead of the typical `dcl start`:
-
-1. Run `npm i`
-2. Run `npm start`
+To run this scene, you need the `next` version of the CLI. You can install it with `npm i -g decentraland@next`. Then, just run the scene with `dcl start`.
 
 
 # ECS 7
@@ -68,7 +65,6 @@ Base components already come packed as part of the SDK. Most of them interact di
 
 
 ```ts
-const { Transform, GLFTShape } = engine.baseComponents
 const entity = engine.addEntity()
 Transfrom.create(entity, {
   position: { x: 12, y: 1, z: 12 },
@@ -86,45 +82,57 @@ GLTFShape.create(zombie, {
 
 ### Custom Components
 
-Each component must have a unique number ID. If a number is repeated, the engine or another player receiving updates might apply changes to the wrong component. Note that numbers 1-1000 are reserved for the base components.
+Each component must have a unique number ID. If a number is repeated, the engine or another player receiving updates might apply changes to the wrong component. Note that numbers 1-2000 are reserved for the base components.
 
-When creating a custom component you declare the structure of the data to be stored in it. Every field in a component MUST belong to one of the built-in special types provided as part of the SDK. These special types include extra functionality that allows them to be serialized/deserialized.
+When creating a custom component you declare the schema of the data to be stored in it. Every field in a component MUST belong to one of the built-in special schemas provided as part of the SDK. These special schemas include extra functionality that allows them to be serialized/deserialized.
 
-Currently, the names of these special types are:
+Currently, the names of these special schemas are:
+#### Primitives
+1. `Schemas.Boolean`: true or false (serialized as a Byte) 
+2. `Schemas.String`: UTF8 strings (serialized length and content)
+3. `Schemas.Float`: single precission float
+4. `Schemas.Double`: double precision float
+5. `Schemas.Byte`: a single byte, integer with range 0..255
+6. `Schemas.Short`: 16 bits signed-integer with range -32768..32767
+7. `Schemas.Int`: 32 bits signed-integer with range -2³¹..(2³¹-1)
+8. `Schemas.Int64`: 64 bits signed-integer
+9. `Schemas.Number`: an alias to Schemas.Float
 
-- Int32
-- ECSString
-- ECSBoolean
+#### Schema generator
+10. `Schemas.Enum`: passing the serialization Schema and the original Enum as generic
+11. `Schemas.Array`: passing the item Schema 
+12. `Schemas.Map`: passing a Map with Schemas as values
+14. `Schemas.Optional`: passing the schema to serialize
 
-Below are some examples of how these types can be declared.
+Below are some examples of how these schemas can be declared.
 
 ```ts
-const object = MapType({ x: Int32 }) // { x: 1 }
+const object = Schemas.Map({ x: Schemas.Int }) // { x: 1 }
 
-const array = ArrayType(Int32) // [1,2,3,4]
+const array = Schemas.Map(Schemas.Int) // [1,2,3,4]
 
-const objectArray = ArrayType(
-  MapType({ x: Int32 })
+const objectArray = Schemas.Array(
+  Schemas.Map({ x: Schemas.Int })
 ) // [{ x: 1 }, { x: 2 }]
 
-const BasicTypes = MapType({
-  x: Int32,
-  y: Float32,
-  text: String,
-  flag: Boolean
+const BasicSchemas = Schemas.Map({
+  x: Schemas.Int,
+  y: Schemas.Float,
+  text: Schemas.String,
+  flag: Schemas.Boolean
   }) // { x: 1, y: 1.412, text: 'ecs 7 text', flag: true }
   
-const VelocityType = MapType({
-  x: Float32,
-  y: Float32,
-  z: Float32
+const VelocitySchema = Schemas.Map({
+  x: Schemas.Float,
+  y: Schemas.Float,
+  z: Schemas.Float
 })
 ```
 
-To then create a custom component using one of these types, use the following syntax:
+To then create a custom component using one of these schemas, use the following syntax:
 
 ```ts
-export const myCustomComponent = engine.defineComponent(ComponentID, MyDataType)
+export const myCustomComponent = engine.defineComponent(MyDataSchema, ComponentID)
 ```
 
 
@@ -153,13 +161,13 @@ wheel.addComponent(new WheelSpin())
  * ECS 7
  */
 // Define Component
-const VelocityType = MapType({
-  x: Float32,
-  y: Float32,
-  z: Float32
+const VelocitySchema = Schemas.Map({
+  x: Schemas.Float,
+  y: Schemas.Float,
+  z: Schemas.Float
 })
 const COMPONENT_ID = 2008
-const VelocityComponent = engine.deficneComponent(COMPONENT_ID, Velocity)
+const VelocityComponent = engine.deficneComponent(Velocity, COMPONENT_ID)
 // Create Entity
 const entity = engine.addEntity()
 
@@ -199,18 +207,19 @@ engine.addSystem(mySystemDT)
 
 ### Query components
 
-The way to group/query the components inside systems is using the method groupOf.
-`engine.groupOf(...components)`.
+The way to group/query the components inside systems is using the method getEntitiesWith.
+`engine.getEntitiesWith(...components)`.
 
 
 ```ts
 function physicsSystem(dt: number) {
-  const [entity, transform, velocity] = engine.groupOf(Transform, Velociy)
-  // transform & velocity are read only components.
-  if (transform.position.x === 10) {
-    // To update a component, you need to call the `.mutable` method
-    const mutableVelocity = VelocityComponent.mutable(entity)
-    mutableVelocity.x += 1
+  for (const [entity, transform, velocity] of engine.getEntitiiesWith(Transform, Velociy)) {
+    // transform & velocity are read only components.
+    if (transform.position.x === 10) {
+      // To update a component, you need to call the `.mutable` method
+      const mutableVelocity = VelocityComponent.getMutable(entity)
+      mutableVelocity.x += 1
+    }
   }
 }
 
@@ -223,18 +232,18 @@ engine.removeSystem(physicsSystem)
 
 ## Mutability
 
-Mutability is now an important distinction. We can choose to deal with mutable or with immutable versions of a component. We should use `mutable` only when we plan to make changes to a component. Dealing with immutable versions of components results in a huge gain in performance.
+Mutability is now an important distinction. We can choose to deal with mutable or with immutable versions of a component. We should use `getMutable` only when we plan to make changes to a component. Dealing with immutable versions of components results in a huge gain in performance.
 
-The `.getFrom()` function in a component returns an immutable version of the component. You can only read its values, but can't change any of the properties on it.
+The `.get()` function in a component returns an immutable version of the component. You can only read its values, but can't change any of the properties on it.
 
 ```ts
-const immutableTransform = baseComponents.Transform.getFrom(myEntity)
+const immutableTransform = baseComponents.Transform.get(myEntity)
 ```
 
-To fetch the mutable version of a component, call it via `ComopnentType.mutable()`. For example:
+To fetch the mutable version of a component, call it via `ComponentDefinition.getMutable()`. For example:
 
 ```ts
-const mutableTransform = baseComponents.Transform.mutable(myEntity)
+const mutableTransform = baseComponents.Transform.getMutable(myEntity)
 ```
 
 
