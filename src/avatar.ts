@@ -29,9 +29,7 @@ export function createAvatarShape(x: number, y: number, z: number, spawner = fal
             "urn:decentraland:matic:collections-v2:0xd89efd0be036410d4ff194cd6ecece4ef8851d86:0"
         ],
         expressionTriggerId: 'RAISE_HAND',
-        expressionTriggerTimestamp: 0,
-        stickerTriggerId: '2',
-        stickerTriggerTimestamp: 0
+        expressionTriggerTimestamp: 0
     })
 
     return entity
@@ -50,9 +48,9 @@ export function createAvatarShape2(x: number, y: number, z: number, spawner = fa
         id: '0x7ec943b233798fb45c5d648b106aeefaf2e50f85',
         bodyShape: 'urn:decentraland:off-chain:base-avatars:BaseMale',
         name: 'Basico',
-        eyeColor: {r: 0.55, g:1, b:1},
-        hairColor: {r:1, g:0.55, b:1},
-        skinColor: {r:1, g:1, b:0.55},
+        eyeColor: {r: 1, g:1, b:0},
+        hairColor: {r:1, g:1, b:0},
+        skinColor: {r:1, g:1, b:0},
         talking: true,
         wearables: ['urn:decentraland:off-chain:base-avatars:eyes_00',
             "urn:decentraland:off-chain:base-avatars:eyebrows_00",

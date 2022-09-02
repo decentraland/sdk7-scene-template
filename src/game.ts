@@ -58,16 +58,15 @@ function spawnerSystem() {
     const avatarsShapes = engine.getEntitiesWith(AvatarShape)
     for (const [entity] of avatarsShapes) {
       const avatarShape = AvatarShape.getMutable(entity)
-      // avatarShape.talking = ! avatarShape.talking
-      // avatarShape.skinColor = {r: Math.random(), g:Math.random(), b:Math.random()}
-      // avatarShape.hairColor = {r: Math.random(), g:Math.random(), b:Math.random()}
-      avatarShape.expressionTriggerId = 'stopthis'
+      avatarShape.talking = ! avatarShape.talking
+      avatarShape.skinColor = {r: Math.random(), g:Math.random(), b:Math.random()}
+      avatarShape.hairColor = {r: 1, g:1, b:1}
+      avatarShape.expressionTriggerId = 'headexplode'
       avatarShape.expressionTriggerTimestamp = amount
     }
   }
 }
 
-createAvatarShape(2,0,2)
 createAvatarShape2(5,0,5)
 createCube(8, 1, 8, true)
 //engine.addSystem(circularSystem)
