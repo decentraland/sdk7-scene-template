@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@dcl/eslint-config": "^1.0.1",
-    "@dcl/sdk": "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/update-avatar-shape-proto/dcl-sdk-7.0.0-2978364175.commit-7f52679.tgz"
+    "@dcl/sdk": "^7.0.0-2979266925.commit-497e30d"
   },
   "engines": {
     "node": ">=14.0.0",

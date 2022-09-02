@@ -6,11 +6,14 @@ export function createAvatarShape(x: number, y: number, z: number, spawner = fal
         scale: { x: 1, y: 1, z: 1 },
         rotation: { x: 0, y: 0, z: 0, w: 1 }
     })
+    
+    const avatarShape = AvatarShape.getMutable(entity)
+    avatarShape.name = "new name"
 
     AvatarShape.create(entity,{
         id: '0x349834D',
         bodyShape: 'urn:decentraland:off-chain:base-avatars:BaseMale',
-        name: 'ElToronto',
+        name: 'ThePerfectUser',
         eyeColor: {r: 0.55, g:1, b:1},
         hairColor: {r:1, g:0.55, b:1},
         skinColor: {r:1, g:1, b:0.55},
@@ -28,7 +31,7 @@ export function createAvatarShape(x: number, y: number, z: number, spawner = fal
             "urn:decentraland:matic:collections-v2:0x1df3011a14ea736314df6cdab4fff824c5d46ec1:5",
             "urn:decentraland:matic:collections-v2:0xd89efd0be036410d4ff194cd6ecece4ef8851d86:0"
         ],
-        expressionTriggerId: 'RAISE_HAND',
+        expressionTriggerId: 'disco',
         expressionTriggerTimestamp: 0
     })
 
@@ -44,30 +47,30 @@ export function createAvatarShape2(x: number, y: number, z: number, spawner = fa
         rotation: { x: 0, y: 0, z: 0, w: 1 }
     })
     
-    AvatarShape.create(entity,{
-        id: '0x7ec943b233798fb45c5d648b106aeefaf2e50f85',
-        bodyShape: 'urn:decentraland:off-chain:base-avatars:BaseMale',
-        name: 'Basico',
-        eyeColor: {r: 1, g:1, b:0},
-        hairColor: {r:1, g:1, b:0},
-        skinColor: {r:1, g:1, b:0},
-        talking: true,
-        wearables: ['urn:decentraland:off-chain:base-avatars:eyes_00',
-            "urn:decentraland:off-chain:base-avatars:eyebrows_00",
-            "urn:decentraland:off-chain:base-avatars:mouth_00",
-            "urn:decentraland:off-chain:base-avatars:casual_hair_01",
-            "urn:decentraland:off-chain:base-avatars:beard",
-            "urn:decentraland:off-chain:base-avatars:green_hoodie",
-            "urn:decentraland:off-chain:base-avatars:brown_pants",
-            "urn:decentraland:off-chain:base-avatars:sneakers"
-        ]
-    })
+    // AvatarShape.create(entity,{
+    //     id: '0x7ec943b233798fb45c5d648b106aeefaf2e50f85',
+    //     bodyShape: 'urn:decentraland:off-chain:base-avatars:BaseMale',
+    //     name: 'Basico',
+    //     eyeColor: {r: 1, g:1, b:0},
+    //     hairColor: {r:1, g:1, b:0},
+    //     skinColor: {r:1, g:1, b:0},
+    //     talking: true,
+    //     wearables: ['urn:decentraland:off-chain:base-avatars:eyes_00',
+    //         "urn:decentraland:off-chain:base-avatars:eyebrows_00",
+    //         "urn:decentraland:off-chain:base-avatars:mouth_00",
+    //         "urn:decentraland:off-chain:base-avatars:casual_hair_01",
+    //         "urn:decentraland:off-chain:base-avatars:beard",
+    //         "urn:decentraland:off-chain:base-avatars:green_hoodie",
+    //         "urn:decentraland:off-chain:base-avatars:brown_pants",
+    //         "urn:decentraland:off-chain:base-avatars:sneakers"
+    //     ]
+    // })
 
     
-    // AvatarShape.create(entity, {
-    //     id: '0x7ec943b233798fb45c5d648b106aeefaf2e50f85',
-    //     wearables: []
-    // })
+    AvatarShape.create(entity, {
+        id: '0x7ec943b233798fb45c5d648b106aeefaf2e50f85',
+        wearables: []
+    })
     
     return entity
 }

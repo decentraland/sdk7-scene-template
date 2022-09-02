@@ -67,8 +67,9 @@ function spawnerSystem() {
   }
 }
 
-createAvatarShape2(5,0,5)
+createAvatarShape2(2,0,2)
+// createAvatarShape2(5,0,5)
 createCube(8, 1, 8, true)
 //engine.addSystem(circularSystem)
-engine.addSystem(spawnerSystem)
+// engine.addSystem(spawnerSystem)
 engine.addSystem(danceSystem)
