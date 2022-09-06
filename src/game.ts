@@ -1,3 +1,5 @@
+import {isPointerEventActive} from "@dcl/sdk/dist/ecs7";
+
 function createCube(x: number, y: number, z: number, spawner = false): Entity {
   const entity = engine.addEntity()
 
@@ -35,21 +37,23 @@ function createZombie(x: number, y: number, z: number, spawner = false): Entity 
   
   if (spawner) {
     PointerEvents.create(entity, {
-      pointerEvents: [{eventType: PointerEventType.UP,
-        eventInfo: {
-          button: ActionButton.PRIMARY,
-          hoverText: 'Press click to spawn'
-        }
-      },
-        {eventType: PointerEventType.UP,
+      pointerEvents: [
+        {
+          eventType: PointerEventType.DOWN,
           eventInfo: {
             button: ActionButton.PRIMARY,
-            hoverText: 'Press E to spawn'
+            hoverText: 'Press click to spawn'
+          }
+        },
+        {
+          eventType: PointerEventType.UP,
+          eventInfo: {
+            button: ActionButton.PRIMARY,
+            hoverText: 'Press click to spawn'
           }
         }]
     })
   }
-
   return entity
 }
 
@@ -64,7 +68,7 @@ function circularSystem(dt: number) {
 function spawnerSystem() {
   const clickedCubes = engine.getEntitiesWith(GLTFShape)
   for (const [entity] of clickedCubes) {
-    if(isPointerEventActive(entity,ActionButton.PRIMARY, PointerEventType.UP)){
+    if(wasEntityClicked(entity, ActionButton.PRIMARY)){
       const material =  Material.getMutable(cube)
       material.albedoColor =  {
         r: Math.random(),

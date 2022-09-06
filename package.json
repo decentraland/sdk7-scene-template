@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@dcl/eslint-config": "^1.0.1",
-    "@dcl/sdk": "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/update-pointer-event-result/dcl-sdk-7.0.0-2978388596.commit-be4470d.tgz"
+    "@dcl/sdk": "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/update-pointer-event-result/dcl-sdk-7.0.0-3000625978.commit-613d901.tgz"
   },
   "engines": {
     "node": ">=14.0.0",
