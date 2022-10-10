@@ -48,20 +48,13 @@ Base components already come packed as part of the SDK. Most of them interact di
 - Animator
 - AudioSource
 - AvatarAttach
-- BoxShape
-- CylinderShape
 - GLTFShape
 - NFTShape
-- OnPointerDown
-- OnPointerDownResult
-- OnPointerUp
-- OnPointerUpResult
-- PlaneShape
-- SphereShape
 - TextShape
 - Transform
-
-> Note: Both `OnPointerDownResult` and `OnPointerUpResult` are not meant to be explicitly added to an entity in code. They are added by the engine as a result of a player's interaction.
+- MeshRenderer
+- MeshCollider
+- PointerEvents
 
 
 ```ts
