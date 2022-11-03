@@ -22,7 +22,7 @@ export function circularSystem(dt: number) {
 export function spawnerSystem() {
   const clickedCubes = engine.getEntitiesWith(PointerHoverFeedback)
   for (const [entity] of clickedCubes) {
-    if (Input.wasInputJustActive(InputAction.IA_PRIMARY, PointerEventType.PET_DOWN, entity)) {
+    if (Input.isTriggered(InputAction.IA_PRIMARY, PointerEventType.PET_DOWN, entity)) {
       createCube(1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8, false)
       BounceScaling.createOrReplace(entity)
     }
