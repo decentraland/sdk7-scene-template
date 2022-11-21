@@ -10,7 +10,7 @@ function setup() {
 
   // Create my main cube and color it.
   const cube = createCube(8, 1, 8)
-  Material.create(cube, { albedoColor: Color3.fromHexString('#FFD96C') })
+  Material.create(cube, { material: { $case: 'pbr', pbr: { albedoColor: Color3.fromHexString('#FFD96C') } } })
 }
 
 setup()

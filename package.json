@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@dcl/eslint-config": "^1.0.1",
-    "@dcl/sdk": "^7.0.0-3388940429.commit-45b2012"
+    "@dcl/sdk": "^7.0.0-3491045797.commit-404a2a7"
   },
   "engines": {
     "node": ">=14.0.0",
