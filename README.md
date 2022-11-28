@@ -13,7 +13,7 @@ An Entity is just an ID. It is an abstract concept not represented by any data s
 
 ```ts
 const myEntity = engine.addEntity()
-console.log(myEntity) // 100
+console.console.log(myEntity) // 100
 
 // Remove Entity
 engine.removeEntity(myEntity)
@@ -81,7 +81,7 @@ When creating a custom component you declare the schema of the data to be stored
 
 Currently, the names of these special schemas are:
 #### Primitives
-1. `Schemas.Boolean`: true or false (serialized as a Byte) 
+1. `Schemas.Boolean`: true or false (serialized as a Byte)
 2. `Schemas.String`: UTF8 strings (serialized length and content)
 3. `Schemas.Float`: single precission float
 4. `Schemas.Double`: double precision float
@@ -93,7 +93,7 @@ Currently, the names of these special schemas are:
 
 #### Schema generator
 10. `Schemas.Enum`: passing the serialization Schema and the original Enum as generic
-11. `Schemas.Array`: passing the item Schema 
+11. `Schemas.Array`: passing the item Schema
 12. `Schemas.Map`: passing a Map with Schemas as values
 14. `Schemas.Optional`: passing the schema to serialize
 
@@ -114,7 +114,7 @@ const BasicSchemas = Schemas.Map({
   text: Schemas.String,
   flag: Schemas.Boolean
   }) // { x: 1, y: 1.412, text: 'ecs 7 text', flag: true }
-  
+
 const VelocitySchema = Schemas.Map({
   x: Schemas.Float,
   y: Schemas.Float,
@@ -184,16 +184,16 @@ To add a system, all you need to do is define a function and add it to the engin
 ```ts
 // Basic system
 function mySystem() {
-  log("my system is running")
+  console.log("my system is running")
 }
 
 engine.addSystem(mySystem)
 
 // System with dt
 function mySystemDT(dt: number) {
-  log("time since last frame:  ", dt)
+  console.log("time since last frame:  ", dt)
  }
- 
+
 engine.addSystem(mySystemDT)
 ```
 
@@ -230,13 +230,13 @@ Mutability is now an important distinction. We can choose to deal with mutable o
 The `.get()` function in a component returns an immutable version of the component. You can only read its values, but can't change any of the properties on it.
 
 ```ts
-const immutableTransform = baseComponents.Transform.get(myEntity)
+const immutableTransform = Transform.get(myEntity)
 ```
 
 To fetch the mutable version of a component, call it via `ComponentDefinition.getMutable()`. For example:
 
 ```ts
-const mutableTransform = baseComponents.Transform.getMutable(myEntity)
+const mutableTransform = Transform.getMutable(myEntity)
 ```
 
 

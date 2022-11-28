@@ -2,13 +2,13 @@
   "ecs7": true,
   "display": {
     "title": "ECS7 Decentraland First Scene",
-    "description": "Test",
+    "description": "First scene",
     "navmapThumbnail": "images/scene-thumbnail.png",
     "favicon": "favicon_asset"
   },
   "owner": "",
   "contact": {
-    "name": "Lean",
+    "name": "SDK",
     "email": ""
   },
   "main": "bin/game.js",
