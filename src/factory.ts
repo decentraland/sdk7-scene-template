@@ -13,8 +13,12 @@ import {
 export function createCube(x: number, y: number, z: number, spawner = true): Entity {
   const meshEntity = engine.addEntity()
   Transform.create(meshEntity, { position: { x, y, z } })
-  MeshRenderer.create(meshEntity, { mesh: { $case: 'box', box: { uvs: [] } } })
-  MeshCollider.create(meshEntity, { mesh: { $case: 'box', box: {} } })
+
+  // set how the cube looks and collides
+  MeshRenderer.setBox(meshEntity)
+  MeshCollider.setBox(meshEntity)
+
+  // if it is a spawner, then we set the pointer hover feedback
   if (spawner) {
     PointerHoverFeedback.create(meshEntity, {
       pointerEvents: [
@@ -30,5 +34,6 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
       ]
     })
   }
+
   return meshEntity
 }

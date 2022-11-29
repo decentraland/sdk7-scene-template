@@ -12,6 +12,12 @@ import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { createCube } from './factory'
 
 /**
+ * BounceScaling is the flag-component with the time elapsed since creation.
+ */
+const BounceScalingComponentID = 2000
+export const BounceScaling = engine.defineComponent({ t: Schemas.Number }, BounceScalingComponentID)
+
+/**
  * All cubes rotating behavior
  */
 export function circularSystem(dt: number) {
@@ -44,7 +50,7 @@ export function spawnerSystem() {
  * Add this system and every entity with BounceScaling will bounce for 5 seconds
  * @param dt - detal time in seconds
  */
-export function bounceScaling(dt: number) {
+export function bounceScalingSystem(dt: number) {
   const clickedCubes = engine.getEntitiesWith(BounceScaling, Transform)
   for (const [entity] of clickedCubes) {
     const m = BounceScaling.getMutable(entity)
@@ -59,9 +65,3 @@ export function bounceScaling(dt: number) {
     }
   }
 }
-
-/**
- * BounceScaling is the flag-component with the time elapsed since creation.
- */
-const BounceScalingComponentID = 2000
-export const BounceScaling = engine.defineComponent({ t: Schemas.Number }, BounceScalingComponentID)
