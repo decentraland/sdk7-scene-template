@@ -1,5 +1,10 @@
+import { engine, Material } from '@dcl/sdk/ecs'
+import { Color3 } from '@dcl/sdk/math'
+
 import { createCube } from './factory'
 import { bounceScaling, circularSystem, spawnerSystem } from './systems'
+
+export * from '@dcl/sdk'
 
 // Initial function executed when scene is evaluated.
 function setup() {
