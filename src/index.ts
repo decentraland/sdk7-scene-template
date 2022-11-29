@@ -7,7 +7,7 @@ import { bounceScaling, circularSystem, spawnerSystem } from './systems'
 export * from '@dcl/sdk'
 
 // Initial function executed when scene is evaluated.
-function setup() {
+export async function onStart() {
   // Defining behaviour. See `src/systems.ts` file.
   engine.addSystem(circularSystem)
   engine.addSystem(spawnerSystem)
@@ -17,5 +17,3 @@ function setup() {
   const cube = createCube(8, 1, 8)
   Material.create(cube, { material: { $case: 'pbr', pbr: { albedoColor: Color3.fromHexString('#FFD96C') } } })
 }
-
-setup()
