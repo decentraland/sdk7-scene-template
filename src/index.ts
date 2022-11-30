@@ -1,8 +1,12 @@
-import { engine, Material, executeTask } from '@dcl/sdk/ecs'
+import {
+  engine, executeTask, Material
+} from '@dcl/sdk/ecs'
 import { Color3 } from '@dcl/sdk/math'
 
 import { createCube } from './factory'
 import { bounceScalingSystem, circularSystem, spawnerSystem } from './systems'
+
+import { setupUi } from './ui'
 
 // export all the functions required to make the scene work
 export * from '@dcl/sdk'
@@ -18,3 +22,5 @@ executeTask(async function () {
   const cube = createCube(8, 1, 8)
   Material.setPbrMaterial(cube, { albedoColor: Color3.fromHexString('#FFD96C') })
 })
+
+setupUi()
