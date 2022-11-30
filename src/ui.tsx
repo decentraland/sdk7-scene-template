@@ -6,7 +6,7 @@ import {
 import { Color4 } from '@dcl/sdk/math'
 import ReactEcs, { ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
 
-export const uiComponent = () => (
+const uiComponent = () => (
     <UiEntity
         uiTransform={{
             width: 300,
