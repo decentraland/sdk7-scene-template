@@ -1,7 +1,7 @@
 {
   "name": "dcl-project",
   "version": "1.0.0",
-  "description": "ECS7 ",
+  "description": "SDK7 Template scene",
   "scripts": {
     "start": "dcl start",
     "build": "build-ecs",
@@ -9,10 +9,10 @@
     "ecs:install-next": "npm install --save-dev @dcl/sdk@next"
   },
   "devDependencies": {
-    "@dcl/sdk": "^7.0.2"
+    "@dcl/sdk": "latest"
   },
   "engines": {
-    "node": ">=14.0.0",
+    "node": ">=16.0.0",
     "npm": ">=6.0.0",
     "yarn": "please use npm"
   },

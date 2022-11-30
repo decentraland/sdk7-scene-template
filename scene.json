@@ -1,8 +1,8 @@
 {
   "ecs7": true,
   "display": {
-    "title": "ECS7 Decentraland First Scene",
-    "description": "First scene",
+    "title": "SDK7 Decentraland - Cube Spawner Scene",
+    "description": "First scene with SDK7",
     "navmapThumbnail": "images/scene-thumbnail.png",
     "favicon": "favicon_asset"
   },
@@ -11,7 +11,7 @@
     "name": "SDK",
     "email": ""
   },
-  "main": "bin/game.js",
+  "main": "bin/index.js",
   "tags": [],
   "scene": {
     "parcels": [

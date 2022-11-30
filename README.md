@@ -1,14 +1,10 @@
-# ECS7 Test scene
+# SDK7 Test scene
 
-This scene is built with the ECS7 in alpha state.
+This scene is built with the SDK7 in alpha state.
 
-To run this scene, you need the `next` version of the CLI. You can install it with `npm i -g decentraland@next`. Then, just run the scene with `dcl start`.
-
-
-# ECS 7
+# New ECS for SDK7
 
 ## Entities
-
 An Entity is just an ID. It is an abstract concept not represented by any data structure. There is no "class Entity". Just a number that is used as a reference to group different components.
 
 ```ts
@@ -45,26 +41,38 @@ myEntity.addComponent(Transform)
 
 Base components already come packed as part of the SDK. Most of them interact directly with the renderer in some way. This is the full list of currently supported base components:
 
-- Animator
-- AudioSource
-- AvatarAttach
-- GLTFShape
-- NFTShape
-- TextShape
 - Transform
+- Animator
+- Material
 - MeshRenderer
 - MeshCollider
-- PointerEvents
+- AudioSource
+- AudioStream
+- AvatarAttach
+- AvatarModifierArea
+- AvatarShape
+- Billboard
+- CameraMode
+- CameraModeArea
+- GltfContainer
+- NftShape
+- PointerEventsResult
+- PointerHoverFeedback
+- PointerLock
+- Raycast
+- RaycastResult
+- TextShape
+- VisibilityComponent
 
 
 ```ts
 const entity = engine.addEntity()
 Transfrom.create(entity, {
-  position: { x: 12, y: 1, z: 12 },
-  scale: { x: 1, y: 1, z: 1 },
-  rotation: { x: 0, y: 0, z: 0, w: 1 }
+  position: Vector3.create(12, 1, 12)
+  scale: Vector3.One(),
+  rotation: Quaternion.Identity()
 })
-GLTFShape.create(zombie, {
+GltfContainer.create(zombie, {
   withCollisions: true,
   isPointerBlocker: true,
   visible: true,
@@ -91,11 +99,18 @@ Currently, the names of these special schemas are:
 8. `Schemas.Int64`: 64 bits signed-integer
 9. `Schemas.Number`: an alias to Schemas.Float
 
+#### Specials
+10. `Schemas.Entity`: a wrapper to int32 that casts the type to `Entity`
+11. `Schemas.Vector3`: a Vector3 with { x, y, z }
+12. `Schemas.Quaternion`: a Quaternion with { x, y, z, w}
+13. `Schemas.Color3`: a Color3 with { r, g, b }
+14. `Schemas.Color4`: a Colo4 with { r, g, b, a }
+
 #### Schema generator
-10. `Schemas.Enum`: passing the serialization Schema and the original Enum as generic
-11. `Schemas.Array`: passing the item Schema
-12. `Schemas.Map`: passing a Map with Schemas as values
-14. `Schemas.Optional`: passing the schema to serialize
+15. `Schemas.Enum`: passing the serialization Schema and the original Enum as generic
+16. `Schemas.Array`: passing the item Schema
+17. `Schemas.Map`: passing a Map with Schemas as values
+18. `Schemas.Optional`: passing the schema to serialize
 
 Below are some examples of how these schemas can be declared.
 
@@ -238,10 +253,3 @@ To fetch the mutable version of a component, call it via `ComponentDefinition.ge
 ```ts
 const mutableTransform = Transform.getMutable(myEntity)
 ```
-
-
-## Known Issues
-
-- Collisions don’t work with any shape
-- Entities with a TextShape might not correctly appear in the position indicated by the Transform
-- Sometimes GLTF entities aren’t rendered by the engine
