@@ -152,7 +152,7 @@ For contrast, below is an example of how components were constructed prior to SD
  * OLD SDK
  */
 
-// Define Coponent
+// Define Component
 @Component("velocity")
 export class Velocity extends Vector3 {
   constructor(x: number, y: number, z: number) {
@@ -175,7 +175,7 @@ const VelocitySchema = Schemas.Map({
   z: Schemas.Float
 })
 const COMPONENT_ID = 2008
-const VelocityComponent = engine.deficneComponent(Velocity, COMPONENT_ID)
+const VelocityComponent = engine.defineComponent(Velocity, COMPONENT_ID)
 // Create Entity
 const entity = engine.addEntity()
 
@@ -183,7 +183,7 @@ const entity = engine.addEntity()
 VelocityComponent.create(entity, { x: 1, y: 2.3, z: 8 })
 
 // Remove instance of a component
-VelocityComponenty.deleteFrom(entity)
+VelocityComponent.deleteFrom(entity)
 ```
 
 
@@ -221,7 +221,7 @@ The way to group/query the components inside systems is using the method getEnti
 
 ```ts
 function physicsSystem(dt: number) {
-  for (const [entity, transform, velocity] of engine.getEntitiiesWith(Transform, Velociy)) {
+  for (const [entity, transform, velocity] of engine.getEntitiesWith(Transform, Velocity)) {
     // transform & velocity are read only components.
     if (transform.position.x === 10) {
       // To update a component, you need to call the `.mutable` method
