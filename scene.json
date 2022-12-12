@@ -1,5 +1,6 @@
 {
   "ecs7": true,
+  "runtimeVersion": "7",
   "display": {
     "title": "SDK7 Decentraland - Cube Spawner Scene",
     "description": "First scene with SDK7",
