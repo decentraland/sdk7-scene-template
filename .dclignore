@@ -1,4 +1,5 @@
 .*
+bin/*.map
 package.json
 package-lock.json
 yarn-lock.json
@@ -9,6 +10,7 @@ tslint.json
 node_modules
 *.ts
 *.tsx
+.vscode
 Dockerfile
 dist
 README.md
@@ -17,3 +19,4 @@ README.md
 *.zip
 *.rar
 .vscode
+src
