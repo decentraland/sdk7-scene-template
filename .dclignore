@@ -1,6 +1,5 @@
 .*
 bin/*.map
-package.json
 package-lock.json
 yarn-lock.json
 build.json
