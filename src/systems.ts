@@ -2,7 +2,7 @@ import {
   engine,
   MeshRenderer,
   Transform,
-  PointerHoverFeedback,
+  PointerEvents,
   InputAction,
   PointerEventType,
   Schemas,
@@ -15,7 +15,7 @@ import { createCube } from './factory'
  * BounceScaling is the flag-component with the time elapsed since creation.
  */
 const BounceScalingComponentID = 2000
-export const BounceScaling = engine.defineComponent({ t: Schemas.Number }, BounceScalingComponentID)
+export const BounceScaling = engine.defineComponent('bounce-scaling', { t: Schemas.Number })
 
 /**
  * All cubes rotating behavior
@@ -37,7 +37,7 @@ export function circularSystem(dt: number) {
  * just spawn a new cube randomly and animate the spawner with a bounce.
  */
 export function spawnerSystem() {
-  const clickedCubes = engine.getEntitiesWith(PointerHoverFeedback)
+  const clickedCubes = engine.getEntitiesWith(PointerEvents)
   for (const [entity] of clickedCubes) {
     if (inputSystem.isTriggered(InputAction.IA_PRIMARY, PointerEventType.PET_DOWN, entity)) {
       createCube(1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8, false)

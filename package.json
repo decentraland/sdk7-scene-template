@@ -9,7 +9,7 @@
     "ecs:install-next": "npm install --save-dev @dcl/sdk@next"
   },
   "devDependencies": {
-    "@dcl/sdk": "latest"
+    "@dcl/sdk": "^7.0.6-3942933325.commit-70f967f"
   },
   "engines": {
     "node": ">=16.0.0",
