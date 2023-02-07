@@ -4,7 +4,7 @@ import {
   Transform,
   MeshRenderer,
   MeshCollider,
-  PointerHoverFeedback,
+  PointerEvents,
   PointerEventType,
   InputAction
 } from '@dcl/sdk/ecs'
@@ -20,7 +20,7 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
 
   // if it is a spawner, then we set the pointer hover feedback
   if (spawner) {
-    PointerHoverFeedback.create(meshEntity, {
+    PointerEvents.create(meshEntity, {
       pointerEvents: [
         {
           eventType: PointerEventType.PET_DOWN,
