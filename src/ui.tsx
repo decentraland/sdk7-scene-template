@@ -9,7 +9,7 @@ const uiComponent = () => (
   <UiEntity
     uiTransform={{
       width: 300,
-      margin: { top: '70px', left: '245px' },
+      margin: { top: '90px', left: '300px' },
       padding: { top: 10, bottom: 10, left: 10, right: 10 }
     }}
     uiBackground={{ color: Color4.create(0.5, 0.8, 0.1, 0.6) }}
@@ -25,6 +25,7 @@ const uiComponent = () => (
       <Label
         value='SDK 7'
         fontSize={32}
+        uiTransform={{height: 40}}
         uiBackground={{ color: Color4.fromHexString('#fbf0f0') }}
       />
     </UiEntity>
@@ -39,6 +40,7 @@ const uiComponent = () => (
       <Label
         value={`Player: ${getPlayerPosition()}`}
         fontSize={18}
+        uiTransform={{height: 40}}
         uiBackground={{ color: Color4.fromHexString('#fbf0f0') }}
       />
     </UiEntity>
