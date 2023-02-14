@@ -8,42 +8,26 @@ import ReactEcs, { Label, ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
 const uiComponent = () => (
   <UiEntity
     uiTransform={{
-      width: 300,
-      margin: { top: '90px', left: '300px' },
-      padding: { top: 10, bottom: 10, left: 10, right: 10 }
+      width: 400,
+      height: 230,
+      margin: { top: 16, left: 270 },
+      padding: { top: 10, bottom: 10, left: 10, right: 10 },
+      flexDirection: 'column',
     }}
     uiBackground={{ color: Color4.create(0.5, 0.8, 0.1, 0.6) }}
   >
-    <UiEntity
-      uiTransform={{
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        display: 'flex'
-      }}
-    >
-      <Label
-        value='SDK 7'
-        fontSize={32}
-        uiTransform={{height: 40}}
-        uiBackground={{ color: Color4.fromHexString('#fbf0f0') }}
-      />
-    </UiEntity>
-    <UiEntity
-      uiTransform={{
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        display: 'flex'
-      }}
-    >
-      <Label
-        value={`Player: ${getPlayerPosition()}`}
-        fontSize={18}
-        uiTransform={{height: 40}}
-        uiBackground={{ color: Color4.fromHexString('#fbf0f0') }}
-      />
-    </UiEntity>
+    <Label
+      value="SDK 7"
+      fontSize={18}
+      uiTransform={{ flexGrow: 1 }}
+      uiBackground={{ color: Color4.fromHexString('#fbf0f03f') }}
+    />
+    <Label
+      value={`Player: ${getPlayerPosition()}`}
+      fontSize={18}
+      uiTransform={{ width: '100%', height: 70 }}
+      uiBackground={{ color: Color4.fromHexString('#fbf0f01f') }}
+    />
   </UiEntity>
 )
 
