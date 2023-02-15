@@ -7,7 +7,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Debug Decentraland in Chrome",
-      "url": "${command:decentraland.commands.getDebugURL}",
+      "url": "${command:decentraland-sdk7.commands.getDebugURL}",
       "webRoot": "${workspaceFolder}/bin",
       "sourceMapPathOverrides": {
         "dcl:///*": "${workspaceFolder}/*"
