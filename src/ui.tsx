@@ -3,31 +3,68 @@ import {
   Transform,
 } from '@dcl/sdk/ecs'
 import { Color4 } from '@dcl/sdk/math'
-import ReactEcs, { Label, ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
+import ReactEcs, { Button, Label, ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
+import { Cube } from './components'
+import { createCube } from './factory'
 
 const uiComponent = () => (
   <UiEntity
     uiTransform={{
       width: 400,
       height: 230,
-      margin: { top: 16, left: 270 },
-      padding: { top: 10, bottom: 10, left: 10, right: 10 },
-      flexDirection: 'column',
+      //  { top: 16, right: 0, bottom: 8 left: 270 },
+      margin: '16px 0 8px 270px',
+      // { top: 4, bottom: 4, left: 4, right: 4 },
+      padding: 4,
     }}
     uiBackground={{ color: Color4.create(0.5, 0.8, 0.1, 0.6) }}
   >
-    <Label
-      value="SDK 7"
-      fontSize={18}
-      uiTransform={{ flexGrow: 1 }}
-      uiBackground={{ color: Color4.fromHexString('#fbf0f03f') }}
-    />
-    <Label
-      value={`Player: ${getPlayerPosition()}`}
-      fontSize={18}
-      uiTransform={{ width: '100%', height: 70 }}
-      uiBackground={{ color: Color4.fromHexString('#fbf0f01f') }}
-    />
+    <UiEntity
+      uiTransform={{
+        width: '100%',
+        height: '100%',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}
+      uiBackground={{ color: Color4.fromHexString("#70ac76ff") }}
+    >
+      <UiEntity
+        uiTransform={{
+          width: '100%',
+          height: 50,
+          margin: '8px 0'
+        }}
+        uiBackground={{
+          textureMode: 'center',
+          texture: {
+            src: 'images/scene-thumbnail.png',
+          },
+        }}
+        uiText={{ value: 'SDK7', fontSize: 18 }}
+      />
+      <Label
+        onMouseDown={() => {console.log('Player Position clicked !')}}
+        value={`Player: ${getPlayerPosition()}`}
+        fontSize={18}
+        uiTransform={{ width: '100%', height: 30 } }
+      />
+      <Label
+        onMouseDown={() => {console.log('# Cubes clicked !')}}
+        value={`# Cubes: ${[...engine.getEntitiesWith(Cube)].length}`}
+        fontSize={18}
+        uiTransform={{ width: '100%', height: 30 } }
+      />
+      <Button
+        uiTransform={{ width: 100, height: 40, margin: 8 }}
+        value='Spawn cube'
+        variant='primary'
+        fontSize={14}
+        onMouseDown={() => {
+          createCube(1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8, false)
+        }}
+      />
+     </UiEntity>
   </UiEntity>
 )
 

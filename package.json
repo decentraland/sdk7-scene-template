@@ -9,7 +9,7 @@
     "upgrade-sdk:next": "npm install --save-dev @dcl/sdk@next"
   },
   "devDependencies": {
-    "@dcl/sdk": "next"
+    "@dcl/sdk": "^7.0.6-4183962432.commit-2fbe270"
   },
   "engines": {
     "node": ">=16.0.0",
