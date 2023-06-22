@@ -10,6 +10,7 @@ import {
 } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { createCube } from './factory'
+import { Spinner } from './components'
 
 /**
  * BounceScaling is the flag-component with the time elapsed since creation.
@@ -20,30 +21,18 @@ export const BounceScaling = engine.defineComponent('BounceScaling', { t: Schema
  * All cubes rotating behavior
  */
 export function circularSystem(dt: number) {
-  const entitiesWithMeshRenderer = engine.getEntitiesWith(MeshRenderer, Transform)
-  for (const [entity, _meshRenderer, _transform] of entitiesWithMeshRenderer) {
+  const entitiesWithSpinner = engine.getEntitiesWith(Spinner, Transform)
+  for (const [entity, _spinner, _transform] of entitiesWithSpinner) {
     const mutableTransform = Transform.getMutable(entity)
+    const spinnerData = Spinner.get(entity)
 
     mutableTransform.rotation = Quaternion.multiply(
       mutableTransform.rotation,
-      Quaternion.fromAngleAxis(dt * 10, Vector3.Up())
+      Quaternion.fromAngleAxis(dt * spinnerData.speed, Vector3.Up())
     )
   }
 }
 
-/**
- * The spawner system is listening for entities with hover feedback, when a input is emitted
- * just spawn a new cube randomly and animate the spawner with a bounce.
- */
-export function spawnerSystem() {
-  const clickedCubes = engine.getEntitiesWith(PointerEvents)
-  for (const [entity] of clickedCubes) {
-    if (inputSystem.isTriggered(InputAction.IA_PRIMARY, PointerEventType.PET_DOWN, entity)) {
-      createCube(1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8, false)
-      BounceScaling.createOrReplace(entity)
-    }
-  }
-}
 
 /**
  * Add this system and every entity with BounceScaling will bounce for 5 seconds
