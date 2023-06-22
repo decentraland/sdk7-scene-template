@@ -4,12 +4,8 @@ import {
   Schemas,
 } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
-import { Spinner } from './components'
+import { BounceScaling, Spinner } from './components'
 
-/**
- * BounceScaling is the flag-component with the time elapsed since creation.
- */
-export const BounceScaling = engine.defineComponent('BounceScaling', { t: Schemas.Number })
 
 /**
  * All cubes rotating behavior
