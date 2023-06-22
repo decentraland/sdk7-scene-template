@@ -1,15 +1,9 @@
 import {
   engine,
-  MeshRenderer,
   Transform,
-  PointerEvents,
-  InputAction,
-  PointerEventType,
   Schemas,
-  inputSystem
 } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
-import { createCube } from './factory'
 import { Spinner } from './components'
 
 /**
