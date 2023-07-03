@@ -1,10 +1,29 @@
-# SDK7 Test scene
+# SDK7 Template scene
 
-This scene is built with the SDK7 in alpha state.
+## Try it out
 
-# New ECS for SDK7
+**Previewing the scene**
 
-## Entities
+1. Download this repository.
+
+2. Install the [Decentraland Editor](https://docs.decentraland.org/creator/development-guide/sdk7/editor/)
+
+3. Open a Visual Studio Code window on this scene's root folder. Not on the root folder of the whole repo, but instead on this sub-folder that belongs to the scene.
+
+4. Open the Decentraland Editor tab, and press **Run Scene**
+
+Alternatively, you can use the command line. Inside this scene root directory run:
+
+```
+npm run start
+```
+
+## What's new on SDK 7
+
+Below are some basic concepts about the SDK 7 syntax. For more details, see the [Documentation site](https://docs.decentraland.org/creator/).
+
+### Entities
+
 An Entity is just an ID. It is an abstract concept not represented by any data structure. There is no "class Entity". Just a number that is used as a reference to group different components.
 
 ```ts
@@ -17,7 +36,7 @@ engine.removeEntity(myEntity)
 
 > Note: Note that it's no longer necessary to separately create an entity and then add it to the engine, this is all done in a single act.
 
-## Components
+### Components
 
 The component is just a data container, WITHOUT any functions.
 
@@ -34,10 +53,7 @@ This is different from how the syntax was in SDK6:
 myEntity.addComponent(Transform)
 ```
 
-
-
-
-### Base Components
+#### Base Components
 
 Base components already come packed as part of the SDK. Most of them interact directly with the renderer in some way. This is the full list of currently supported base components:
 
@@ -64,7 +80,6 @@ Base components already come packed as part of the SDK. Most of them interact di
 - TextShape
 - VisibilityComponent
 
-
 ```ts
 const entity = engine.addEntity()
 Transfrom.create(entity, {
@@ -80,15 +95,16 @@ GltfContainer.create(zombie, {
 })
 ```
 
-
-### Custom Components
+#### Custom Components
 
 Each component must have a unique number ID. If a number is repeated, the engine or another player receiving updates might apply changes to the wrong component. Note that numbers 1-2000 are reserved for the base components.
 
 When creating a custom component you declare the schema of the data to be stored in it. Every field in a component MUST belong to one of the built-in special schemas provided as part of the SDK. These special schemas include extra functionality that allows them to be serialized/deserialized.
 
 Currently, the names of these special schemas are:
-#### Primitives
+
+##### Primitives
+
 1. `Schemas.Boolean`: true or false (serialized as a Byte)
 2. `Schemas.String`: UTF8 strings (serialized length and content)
 3. `Schemas.Float`: single precission float
@@ -99,14 +115,16 @@ Currently, the names of these special schemas are:
 8. `Schemas.Int64`: 64 bits signed-integer
 9. `Schemas.Number`: an alias to Schemas.Float
 
-#### Specials
+##### Specials
+
 10. `Schemas.Entity`: a wrapper to int32 that casts the type to `Entity`
 11. `Schemas.Vector3`: a Vector3 with { x, y, z }
 12. `Schemas.Quaternion`: a Quaternion with { x, y, z, w}
 13. `Schemas.Color3`: a Color3 with { r, g, b }
 14. `Schemas.Color4`: a Colo4 with { r, g, b, a }
 
-#### Schema generator
+##### Schema generator
+
 15. `Schemas.Enum`: passing the serialization Schema and the original Enum as generic
 16. `Schemas.Array`: passing the item Schema
 17. `Schemas.Map`: passing a Map with Schemas as values
@@ -119,16 +137,14 @@ const object = Schemas.Map({ x: Schemas.Int }) // { x: 1 }
 
 const array = Schemas.Map(Schemas.Int) // [1,2,3,4]
 
-const objectArray = Schemas.Array(
-  Schemas.Map({ x: Schemas.Int })
-) // [{ x: 1 }, { x: 2 }]
+const objectArray = Schemas.Array(Schemas.Map({ x: Schemas.Int })) // [{ x: 1 }, { x: 2 }]
 
 const BasicSchemas = Schemas.Map({
   x: Schemas.Int,
   y: Schemas.Float,
   text: Schemas.String,
   flag: Schemas.Boolean
-  }) // { x: 1, y: 1.412, text: 'ecs 7 text', flag: true }
+}) // { x: 1, y: 1.412, text: 'ecs 7 text', flag: true }
 
 const VelocitySchema = Schemas.Map({
   x: Schemas.Float,
@@ -143,8 +159,6 @@ To then create a custom component using one of these schemas, use the following 
 export const myCustomComponent = engine.defineComponent(MyDataSchema, ComponentID)
 ```
 
-
-
 For contrast, below is an example of how components were constructed prior to SDK 7.
 
 ```ts
@@ -153,7 +167,7 @@ For contrast, below is an example of how components were constructed prior to SD
  */
 
 // Define Component
-@Component("velocity")
+@Component('velocity')
 export class Velocity extends Vector3 {
   constructor(x: number, y: number, z: number) {
     super(x, y, z)
@@ -186,9 +200,7 @@ VelocityComponent.create(entity, { x: 1, y: 2.3, z: 8 })
 VelocityComponent.deleteFrom(entity)
 ```
 
-
-
-## Systems
+### Systems
 
 Systems are pure & simple functions.
 All your logic comes here.
@@ -199,25 +211,23 @@ To add a system, all you need to do is define a function and add it to the engin
 ```ts
 // Basic system
 function mySystem() {
-  console.log("my system is running")
+  console.log('my system is running')
 }
 
 engine.addSystem(mySystem)
 
 // System with dt
 function mySystemDT(dt: number) {
-  console.log("time since last frame:  ", dt)
- }
+  console.log('time since last frame:  ', dt)
+}
 
 engine.addSystem(mySystemDT)
 ```
 
-
-### Query components
+#### Query components
 
 The way to group/query the components inside systems is using the method getEntitiesWith.
 `engine.getEntitiesWith(...components)`.
-
 
 ```ts
 function physicsSystem(dt: number) {
@@ -238,7 +248,7 @@ engine.addSystem(physicsSystem)
 engine.removeSystem(physicsSystem)
 ```
 
-## Mutability
+### Mutability
 
 Mutability is now an important distinction. We can choose to deal with mutable or with immutable versions of a component. We should use `getMutable` only when we plan to make changes to a component. Dealing with immutable versions of components results in a huge gain in performance.
 

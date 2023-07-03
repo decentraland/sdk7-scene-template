@@ -7,14 +7,16 @@ import ReactEcs, { Button, Label, ReactEcsRenderer, UiEntity } from '@dcl/sdk/re
 import { Cube } from './components'
 import { createCube } from './factory'
 
+export function setupUi() {
+  ReactEcsRenderer.setUiRenderer(uiComponent)
+}
+
 const uiComponent = () => (
   <UiEntity
     uiTransform={{
       width: 400,
       height: 230,
-      //  { top: 16, right: 0, bottom: 8 left: 270 },
       margin: '16px 0 8px 270px',
-      // { top: 4, bottom: 4, left: 4, right: 4 },
       padding: 4,
     }}
     uiBackground={{ color: Color4.create(0.5, 0.8, 0.1, 0.6) }}
@@ -75,6 +77,3 @@ function getPlayerPosition() {
   return `{X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}, z: ${z.toFixed(2)} }`
 }
 
-export function setupUi() {
-  ReactEcsRenderer.setUiRenderer(uiComponent)
-}
