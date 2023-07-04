@@ -2,10 +2,10 @@ import { engine, InputAction, inputSystem, Material, MeshCollider, pointerEvents
 import { Color4 } from '@dcl/sdk/math'
 
 
-import { BounceScaling, bounceScalingSystem, circularSystem } from './systems'
+import { bounceScalingSystem, circularSystem } from './systems'
 
 import { setupUi } from './ui'
-import { Spinner } from './components'
+import { BounceScaling, Spinner } from './components'
 import { createCube } from './factory'
 
 // Defining behavior. See `src/systems.ts` file.
