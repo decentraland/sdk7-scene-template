@@ -1,10 +1,15 @@
 import {
   engine,
   Transform,
-  Schemas,
+  inputSystem,
+  Material,
+  InputAction,
+  PointerEventType,
+  PointerEvents,
 } from '@dcl/sdk/ecs'
-import { Quaternion, Vector3 } from '@dcl/sdk/math'
-import { BounceScaling, Spinner } from './components'
+import { Color4, Quaternion, Vector3 } from '@dcl/sdk/math'
+import { BounceScaling, Door, Spinner } from './components'
+import { getRandomHexColor } from './utils'
 
 
 /**
@@ -40,6 +45,19 @@ export function bounceScalingSystem(dt: number) {
     } else {
       const factor = 0.9 + 0.2 * Math.exp(-1.5 * m.t) * Math.sin(10 * m.t)
       Transform.getMutable(entity).scale = Vector3.scale(Vector3.One(), factor)
+    }
+  }
+}
+
+
+export function changeColorSystem() {
+  console.log('change color system')
+  for (const [entity] of engine.getEntitiesWith(Door, PointerEvents)) {
+    if (inputSystem.isTriggered(InputAction.IA_POINTER, PointerEventType.PET_DOWN, entity)) {
+      Material.setPbrMaterial(entity, { albedoColor: Color4.fromHexString(getRandomHexColor()) })
+      const door = Door.getMutable(entity)
+      door.open = !door.open
+      console.log(`The door was ${door.open ? 'opened' : 'closed'}`)
     }
   }
 }

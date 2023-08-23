@@ -1,41 +1,22 @@
-import { engine, InputAction, inputSystem, Material, MeshCollider, pointerEventsSystem } from '@dcl/sdk/ecs'
-import { Color4 } from '@dcl/sdk/math'
-
-
-import { bounceScalingSystem, circularSystem } from './systems'
+import { InputAction, engine, pointerEventsSystem } from '@dcl/sdk/ecs'
+import { bounceScalingSystem, changeColorSystem, circularSystem } from './systems'
 
 import { setupUi } from './ui'
-import { BounceScaling, Spinner } from './components'
 import { createCube } from './factory'
 
 // Defining behavior. See `src/systems.ts` file.
 engine.addSystem(circularSystem)
 engine.addSystem(bounceScalingSystem)
+engine.addSystem(changeColorSystem)
 
 export function main() {
   // draw UI
   setupUi()
-
-  // fetch cube from Inspector
-  const cube = engine.getEntityOrNullByName("Magic Cube")
-  if (cube) {
-    // Give the cube a color
-    Material.setPbrMaterial(cube, { albedoColor: Color4.Blue() })
-
-    // Make the cube spin, with the circularSystem
-    Spinner.create(cube, { speed: 10 })
-
-    // Give the cube a collider, to make it clickable
-    MeshCollider.setBox(cube)
-
-    // Add a click behavior to the cube, spawning new cubes in random places, and adding a bouncy effect for feedback
-    pointerEventsSystem.onPointerDown(
-      { entity: cube, opts: { button: InputAction.IA_POINTER, hoverText: "spawn" } },
-      () => {
-        createCube(1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8, false)
-        BounceScaling.createOrReplace(cube)
-      }
-    )
-  }
-
+  const entity = createCube(1, 1, 1)
+  pointerEventsSystem.onPointerDown(
+    { entity: entity, opts: { button: InputAction.IA_POINTER, hoverText: 'Spawn cube' } },
+    function () {
+      createCube(1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8)
+    }
+  )
 }

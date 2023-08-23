@@ -7,9 +7,10 @@ import {
   PointerEvents,
   PointerEventType,
   InputAction,
-  Material
+  Material,
+  SyncEntity
 } from '@dcl/sdk/ecs'
-import { Cube, Spinner } from './components'
+import { Cube, Door, Spinner } from './components'
 import { Color4 } from '@dcl/sdk/math'
 import { getRandomHexColor } from './utils'
 
@@ -27,25 +28,16 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
   MeshCollider.setBox(entity)
   Material.setPbrMaterial(entity, { albedoColor: Color4.fromHexString(getRandomHexColor()) })
 
+  Door.create(entity, { open: false })
+  SyncEntity.create(entity, { componentIds: [Door.componentId, Material.componentId] })
+  PointerEvents.create(entity, {
+    pointerEvents: [
+      { eventType: PointerEventType.PET_DOWN, eventInfo: { button: InputAction.IA_POINTER, hoverText: 'Change Color' } }
+    ]
+  })
+
   // Make the cube spin, with the circularSystem
   Spinner.create(entity, { speed: 10 * Math.random() })
-
-  // if it is a spawner, then we set the pointer hover feedback
-  if (spawner) {
-    PointerEvents.create(entity, {
-      pointerEvents: [
-        {
-          eventType: PointerEventType.PET_DOWN,
-          eventInfo: {
-            button: InputAction.IA_PRIMARY,
-            hoverText: 'Press E to spawn',
-            maxDistance: 100,
-            showFeedback: true
-          }
-        }
-      ]
-    })
-  }
 
   return entity
 }
