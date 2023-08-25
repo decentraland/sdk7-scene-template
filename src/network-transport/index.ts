@@ -1,5 +1,5 @@
 // @ts-ignore
-import { isServer, crdtSendNetwork, registerClientObserver } from '~system/EngineApi'
+import { isServer, registerClientObserver } from '~system/EngineApi'
 import { Transport, TransportMessage, SyncEntity, engine } from '@dcl/ecs'
 import { RESERVED_STATIC_ENTITIES } from '@dcl/ecs/dist/engine/entity'
 import { serializeCrdtMessages } from '@dcl/sdk/internal/transports/logger'
@@ -7,63 +7,43 @@ import { MessageType, connect, craftMessage } from './ws'
 import { PointerEventsResult } from '@dcl/sdk/ecs'
 
 let connected = false
-let connectedClients = new Set()
+
+function createNetworkSceneTransport(client: any) {
+  const transport: Transport = {
+    filter: (message) => {
+      return syncFilter(message)
+    },
+    send: async (message) => {
+      await client.sendCrdtMessage(message)
+
+      if (transport.onmessage) {
+        const messages = client.getMessages()
+        for (const byteArray of messages) {
+          // Log messages
+          const logMessages = Array.from(serializeCrdtMessages('RecievedMessages', byteArray, engine))
+          if (logMessages.length) console.log(logMessages)
+          // Log messages
+
+          transport.onmessage(byteArray)
+        }
+      }
+    }
+  }
+
+  engine.addTransport(transport)
+}
 
 export async function createNetworkTransport(url?: string) {
   if (connected) return
   connected = true
   // TODO: we need to add 1 transport for each client.
   if (isServer && (await isServer({})).isServer) {
-    ;(globalThis as any).testing((client: any) => {
-      console.log({ client })
-    })
-
-    const SYSTEM_SECONDS = 2
-    let currentTime = 0
-
-    engine.addSystem((dt: number) => {
-      currentTime += dt
-      if (currentTime <= SYSTEM_SECONDS) return
-
-      async function getClients() {
-        const resp = await isServer({})
-
-        for (const clientId of resp.clients) {
-          if (!connectedClients.has(clientId)) {
-            createNetworkSceneTransport(clientId)
-          }
-        }
-        connectedClients = new Set(resp.clients)
+    ;(globalThis as any).registerClientObserver((event: any) => {
+      const { type } = event
+      if (type === 'open') {
+        createNetworkSceneTransport(event.client)
       }
-      getClients()
-      currentTime = 0
     })
-
-    function createNetworkSceneTransport(id: string) {
-      const transport: Transport = {
-        filter: (message) => {
-          if (!connectedClients.has(id)) return false
-          return syncFilter(message)
-        },
-        send: async (message) => {
-          const response = await crdtSendNetwork({ data: message, clientId: id })
-
-          if (response && response.data && response.data.length) {
-            if (transport.onmessage) {
-              for (const byteArray of response.data) {
-                // Log messages
-                const logMessages = Array.from(serializeCrdtMessages('RecievedMessages', byteArray, engine))
-                if (logMessages.length) console.log(logMessages)
-                // Log messages
-
-                transport.onmessage(byteArray)
-              }
-            }
-          }
-        }
-      }
-      engine.addTransport(transport)
-    }
   } else {
     const ws = await connect()
     const messagesToProcess: Uint8Array[] = []
@@ -74,7 +54,11 @@ export async function createNetworkTransport(url?: string) {
 
     ws.onmessage = (event) => {
       if (event.data.byteLength) {
-        messagesToProcess.push(new Uint8Array(event.data))
+        const r = new Uint8Array(event.data)
+        const msgType = r[0]
+        if (msgType === MessageType.Crdt) {
+          messagesToProcess.push(r.subarray(1))
+        }
       }
     }
 

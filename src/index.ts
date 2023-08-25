@@ -7,15 +7,13 @@ import { createCube } from './factory'
 // import { createNetworkServerTransport } from '@dcl/sdk/crdt-server'
 import { createNetworkTransport } from './network-transport'
 
-
 // Defining behavior. See `src/systems.ts` file.
 // engine.addSystem(circularSystem)
 // engine.addSystem(bounceScalingSystem)
 engine.addSystem(changeColorSystem)
 
-
 export async function main() {
-  createNetworkTransport('ws://world-.asd')
+  createNetworkTransport()
 
   // draw UI
   setupUi()
