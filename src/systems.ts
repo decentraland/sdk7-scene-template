@@ -5,7 +5,7 @@ import {
   Material,
   InputAction,
   PointerEventType,
-  PointerEvents,
+  PointerEvents
 } from '@dcl/sdk/ecs'
 import { Color4, Quaternion, Vector3 } from '@dcl/sdk/math'
 import { BounceScaling, Door, Spinner } from './components'

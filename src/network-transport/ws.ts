@@ -26,7 +26,6 @@ type Socket = WebSocket & {
 
 
 export async function connect() {
-  console.log('Trying to connect')
   const url = 'ws://localhost:3000/ws'
   const ws = new WebSocket(url) as Socket
   ws.binaryType = 'arraybuffer'

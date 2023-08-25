@@ -8,21 +8,22 @@ import {
   PointerEventType,
   InputAction,
   Material,
-  SyncEntity
+  SyncEntity,
+  raycastSystem,
+  ColliderLayer,
 } from '@dcl/sdk/ecs'
 import { Cube, Door, Spinner } from './components'
-import { Color4 } from '@dcl/sdk/math'
+import { Color4, Vector3 } from '@dcl/sdk/math'
 import { getRandomHexColor } from './utils'
 
 // Cube factory
-export function createCube(x: number, y: number, z: number, spawner = true): Entity {
+export function createCube(x: number, y: number, z: number, spawner  = true): Entity {
   const entity = engine.addEntity()
 
   // Used to track the cubes
   Cube.create(entity)
 
   Transform.create(entity, { position: { x, y, z } })
-
   // set how the cube looks and collides
   MeshRenderer.setBox(entity)
   MeshCollider.setBox(entity)
@@ -30,6 +31,7 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
 
   Door.create(entity, { open: false })
   SyncEntity.create(entity, { componentIds: [Door.componentId, Material.componentId] })
+
   PointerEvents.create(entity, {
     pointerEvents: [
       { eventType: PointerEventType.PET_DOWN, eventInfo: { button: InputAction.IA_POINTER, hoverText: 'Change Color' } }
