@@ -4,7 +4,6 @@ import { changeColorSystem } from './systems'
 import { setupUi } from './ui'
 import { createCube } from './factory'
 
-// import { createNetworkServerTransport } from '@dcl/sdk/crdt-server'
 import { createNetworkTransport } from './network-transport'
 
 // Defining behavior. See `src/systems.ts` file.
@@ -13,7 +12,7 @@ import { createNetworkTransport } from './network-transport'
 engine.addSystem(changeColorSystem)
 
 export async function main() {
-  createNetworkTransport()
+  createNetworkTransport('wss://scene-state-server.decentraland.zone/ws')
 
   // draw UI
   setupUi()
