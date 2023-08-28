@@ -7,46 +7,45 @@ import { MessageType, connect, craftMessage } from './ws'
 import { PointerEventsResult } from '@dcl/sdk/ecs'
 
 let connected = false
-
-function createNetworkSceneTransport(client: any, clientId: string) {
-  const transport: Transport = {
-    filter: (message) => {
-      if (!connectedClients.has(clientId)) return false
-      return syncFilter(message)
-    },
-    send: async (message) => {
-      await client.sendCrdtMessage(message)
-
-      if (transport.onmessage) {
-        const messages = client.getMessages()
-        for (const byteArray of messages) {
-          // Log messages
-          const logMessages = Array.from(serializeCrdtMessages('RecievedMessages', byteArray, engine))
-          if (logMessages.length) console.log(logMessages)
-          // Log messages
-
-          transport.onmessage(byteArray)
-        }
-      }
-    }
-  }
-
-  engine.addTransport(transport)
-}
-
 const connectedClients = new Set<string>()
+
 export async function createNetworkTransport(url?: string) {
   if (connected) return
   connected = true
-  // TODO: we need to add 1 transport for each client.
   if (isServer && (await isServer({})).isServer) {
     ;(globalThis as any).registerClientObserver((event: any) => {
       const { type } = event
       if (type === 'open') {
-        createNetworkSceneTransport(event.client, event.clientId)
+        const { clientId, client } = event
+        const transport: Transport = {
+          filter: (message) => {
+            if (!connectedClients.has(clientId)) return false
+            return syncFilter(message)
+          },
+          send: async (message) => {
+            if (message.byteLength > 0) {
+              await client.sendCrdtMessage(message)
+            }
+
+            if (transport.onmessage) {
+              const messages = client.getMessages()
+              for (const byteArray of messages) {
+                // Log messages
+                const logMessages = Array.from(serializeCrdtMessages('RecievedMessages', byteArray, engine))
+                if (logMessages.length) {
+                  console.log(logMessages)
+                }
+                // Log messages
+
+                transport.onmessage(byteArray)
+              }
+            }
+          }
+        }
+
+        engine.addTransport(transport)
         connectedClients.add(event.clientId)
-      }
-      if (type === 'close') {
+      } else if (type === 'close') {
         connectedClients.delete(event.clientId)
       }
     })
