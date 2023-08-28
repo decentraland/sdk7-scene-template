@@ -8,9 +8,10 @@ import { PointerEventsResult } from '@dcl/sdk/ecs'
 
 let connected = false
 
-function createNetworkSceneTransport(client: any) {
+function createNetworkSceneTransport(client: any, clientId: string) {
   const transport: Transport = {
     filter: (message) => {
+      if (!connectedClients.has(clientId)) return false
       return syncFilter(message)
     },
     send: async (message) => {
@@ -33,6 +34,7 @@ function createNetworkSceneTransport(client: any) {
   engine.addTransport(transport)
 }
 
+const connectedClients = new Set<string>()
 export async function createNetworkTransport(url?: string) {
   if (connected) return
   connected = true
@@ -41,7 +43,11 @@ export async function createNetworkTransport(url?: string) {
     ;(globalThis as any).registerClientObserver((event: any) => {
       const { type } = event
       if (type === 'open') {
-        createNetworkSceneTransport(event.client)
+        createNetworkSceneTransport(event.client, event.clientId)
+        connectedClients.add(event.clientId)
+      }
+      if (type === 'close') {
+        connectedClients.delete(event.clientId)
       }
     })
   } else {
