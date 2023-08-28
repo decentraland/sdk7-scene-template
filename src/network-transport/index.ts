@@ -1,11 +1,11 @@
-// @ts-ignore
-import { isServer, registerClientObserver } from '~system/EngineApi'
+import { isServer } from '~system/EngineApi'
 import { Transport, TransportMessage, SyncEntity, engine } from '@dcl/ecs'
 import { RESERVED_STATIC_ENTITIES } from '@dcl/ecs/dist/engine/entity'
 import { serializeCrdtMessages } from '@dcl/sdk/internal/transports/logger'
 import { PointerEventsResult } from '@dcl/sdk/ecs'
 import { ReadWriteByteBuffer } from '@dcl/ecs/dist/serialization/ByteBuffer'
 import { getHeaders } from '~system/SignedFetch'
+import { engineToCrdt } from './state'
 
 export enum MessageType {
   Auth = 1,
@@ -33,8 +33,32 @@ type Socket = WebSocket & {
 let connected = false
 const connectedClients = new Set<string>()
 
+declare global {
+  type ClientEvent =
+  | {
+      type: 'open'
+      clientId: string
+      client: {
+        sendCrdtMessage(message: Uint8Array): Promise<void>
+        getMessages(): Uint8Array[]
+      }
+    }
+  | { type: 'close'; clientId: string }
+  var updateCRDTState: (crdt: Uint8Array) => void
+  var registerClientObserver: (fn: (event: ClientEvent) => void) => void
+}
+
+
 function serverSetup() {
-  ;(globalThis as any).registerClientObserver((event: any) => {
+  engine.addTransport({
+    send: async (message) => {
+      if (message.byteLength) {
+        globalThis.updateCRDTState(engineToCrdt())
+      }
+    },
+    filter: syncFilter
+  })
+  globalThis.registerClientObserver((event) => {
     const { type } = event
     if (type === 'open') {
       const { clientId, client } = event
