@@ -1,6 +1,7 @@
+/* eslint-disable no-var */
 import { isServer } from '~system/EngineApi'
 import { PointerEventsResult, Entity, Transport, TransportMessage, SyncEntity, engine } from '@dcl/ecs'
-import { RESERVED_STATIC_ENTITIES } from '@dcl/ecs/dist/engine/entity'
+import { RESERVED_STATIC_ENTITIES, RESERVED_LOCAL_ENTITIES } from '@dcl/ecs/dist/engine/entity'
 import { serializeCrdtMessages } from '@dcl/sdk/internal/transports/logger'
 import { ReadWriteByteBuffer } from '@dcl/ecs/dist/serialization/ByteBuffer'
 import { getHeaders } from '~system/SignedFetch'
@@ -34,11 +35,8 @@ export type NetworkEntityFactory = {
   addEntity(): Entity
 }
 
-function createNetworkEntityFactory(start: number, size: number): NetworkEntityFactory {
-  console.log('create network entity factory', start, size)
-  return {
-    addEntity: () => engine.addEntity()
-  }
+function createNetworkEntityFactory(reservedLocalEntities: number, range: [number, number]) {
+  return engine.addNetworkManager(reservedLocalEntities, range)
 }
 
 let connected = false
@@ -105,7 +103,9 @@ async function createServerTransport(): Promise<NetworkEntityFactory> {
     }
   })
 
-  return createNetworkEntityFactory(0, 512) // TODO: add this to the server context?
+  // TODO: add this to the server context?
+  // This numbers should be fetched by the server
+  return createNetworkEntityFactory(2060, [2061, 2061 + 512])
 }
 
 async function createClientTransport(url: string): Promise<NetworkEntityFactory> {
@@ -157,7 +157,9 @@ async function createClientTransport(url: string): Promise<NetworkEntityFactory>
             offset += 4
             const size = view.getUint32(offset)
             offset += 4
-            resolve(createNetworkEntityFactory(start, size))
+            const localEntitiesReserved = view.getUint32(offset)
+            offset += 4
+            resolve(createNetworkEntityFactory(localEntitiesReserved, [start, start + size]))
             messagesToProcess.push(r.subarray(offset))
           }
         }
@@ -182,6 +184,8 @@ export async function createNetworkTransport(url: string): Promise<NetworkEntity
 }
 
 function syncFilter(message: Omit<TransportMessage, 'messageBuffer'>) {
+  if (!connected) return false
+
   if ((message as any).componentId === PointerEventsResult.componentId) {
     return false
   }
@@ -190,7 +194,13 @@ function syncFilter(message: Omit<TransportMessage, 'messageBuffer'>) {
   if (message.entityId <= RESERVED_STATIC_ENTITIES) {
     return false
   }
-  // If its a new component, we must send it
+
+  if (message.entityId <= RESERVED_LOCAL_ENTITIES) {
+    return false
+  }
+  // Network Entity Always
+
+  // TBD: First component
   if ((message as any).timestamp <= 1) {
     return true
   }

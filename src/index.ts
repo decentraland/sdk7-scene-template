@@ -20,9 +20,9 @@ export async function main() {
   const networkEntityFactory = await createNetworkTransport(serverUrl)
 
   // draw UI
-  setupUi(networkEntityFactory)
+  setupUi(engine)
   pointerEventsSystem.onPointerDown(
-    { entity: entity, opts: { button: InputAction.IA_POINTER, hoverText: 'Spawn cube' } },
+    { entity: entity, opts: { button: InputAction.IA_POINTER, hoverText: 'Spawn Sync cube' } },
     function () {
       createCube(networkEntityFactory, 1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8)
     }
