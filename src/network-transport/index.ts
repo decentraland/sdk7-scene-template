@@ -1,15 +1,15 @@
 import { isServer } from '~system/EngineApi'
-import { Transport, TransportMessage, SyncEntity, engine } from '@dcl/ecs'
+import { PointerEventsResult, Entity, Transport, TransportMessage, SyncEntity, engine } from '@dcl/ecs'
 import { RESERVED_STATIC_ENTITIES } from '@dcl/ecs/dist/engine/entity'
 import { serializeCrdtMessages } from '@dcl/sdk/internal/transports/logger'
-import { PointerEventsResult } from '@dcl/sdk/ecs'
 import { ReadWriteByteBuffer } from '@dcl/ecs/dist/serialization/ByteBuffer'
 import { getHeaders } from '~system/SignedFetch'
 import { engineToCrdt } from './state'
 
 export enum MessageType {
   Auth = 1,
-  Crdt = 2
+  Init = 2,
+  Crdt = 3
 }
 
 export function encodeString(s: string): Uint8Array {
@@ -30,26 +30,36 @@ type Socket = WebSocket & {
   send(data: string | Uint8Array): void
 }
 
+export type NetworkEntityFactory = {
+  addEntity(): Entity
+}
+
+function createNetworkEntityFactory(start: number, size: number): NetworkEntityFactory {
+  console.log('create network entity factory', start, size)
+  return {
+    addEntity: () => engine.addEntity()
+  }
+}
+
 let connected = false
 const connectedClients = new Set<string>()
 
 declare global {
   type ClientEvent =
-  | {
-      type: 'open'
-      clientId: string
-      client: {
-        sendCrdtMessage(message: Uint8Array): Promise<void>
-        getMessages(): Uint8Array[]
+    | {
+        type: 'open'
+        clientId: string
+        client: {
+          sendCrdtMessage(message: Uint8Array): Promise<void>
+          getMessages(): Uint8Array[]
+        }
       }
-    }
-  | { type: 'close'; clientId: string }
+    | { type: 'close'; clientId: string }
   var updateCRDTState: (crdt: Uint8Array) => void
   var registerClientObserver: (fn: (event: ClientEvent) => void) => void
 }
 
-
-function serverSetup() {
+async function createServerTransport(): Promise<NetworkEntityFactory> {
   engine.addTransport({
     send: async (message) => {
       if (message.byteLength) {
@@ -94,63 +104,81 @@ function serverSetup() {
       connectedClients.delete(event.clientId)
     }
   })
+
+  return createNetworkEntityFactory(0, 512) // TODO: add this to the server context?
 }
 
-function clientSetup(url: string) {
+async function createClientTransport(url: string): Promise<NetworkEntityFactory> {
   const messagesToProcess: Uint8Array[] = []
 
-  const ws = new WebSocket(url) as Socket
-  ws.binaryType = 'arraybuffer'
+  return new Promise<NetworkEntityFactory>((resolve, reject) => {
+    try {
+      const ws = new WebSocket(url) as Socket
+      ws.binaryType = 'arraybuffer'
 
-  ws.onopen = async () => {
-    console.log('WS Server Sync connected')
-    const { headers } = await getHeaders({ url, init: { headers: {} } })
-    ws.send(craftMessage(MessageType.Auth, encodeString(JSON.stringify(headers))))
+      ws.onopen = async () => {
+        console.log('WS Server Sync connected')
+        const { headers } = await getHeaders({ url, init: { headers: {} } })
+        ws.send(craftMessage(MessageType.Auth, encodeString(JSON.stringify(headers))))
 
-    const transport: Transport = {
-      filter: syncFilter,
-      send: async (message: Uint8Array) => {
-        ws.send(craftMessage(MessageType.Crdt, message))
-        if (messagesToProcess && messagesToProcess.length) {
-          if (transport.onmessage) {
-            for (const byteArray of messagesToProcess) {
-              // Log messages
-              const logMessages = Array.from(serializeCrdtMessages('RecievedMessages', byteArray, engine))
-              if (logMessages.length) console.log(logMessages)
-              // Log messages
-              transport.onmessage(byteArray)
+        const transport: Transport = {
+          filter: syncFilter,
+          send: async (message: Uint8Array) => {
+            ws.send(craftMessage(MessageType.Crdt, message))
+            if (messagesToProcess && messagesToProcess.length) {
+              if (transport.onmessage) {
+                for (const byteArray of messagesToProcess) {
+                  // Log messages
+                  const logMessages = Array.from(serializeCrdtMessages('RecievedMessages', byteArray, engine))
+                  if (logMessages.length) console.log(logMessages)
+                  // Log messages
+                  transport.onmessage(byteArray)
+                }
+              }
             }
+            messagesToProcess.length = 0
           }
         }
-        messagesToProcess.length = 0
+        engine.addTransport(transport)
       }
-    }
-    engine.addTransport(transport)
-  }
 
-  ws.onmessage = (event) => {
-    if (event.data.byteLength) {
-      const r = new Uint8Array(event.data)
-      const msgType = r[0]
-      if (msgType === MessageType.Crdt) {
-        messagesToProcess.push(r.subarray(1))
+      ws.onmessage = (event) => {
+        if (event.data.byteLength) {
+          let offset = 0
+          const r = new Uint8Array(event.data)
+          const view = new DataView(r.buffer)
+          const msgType = view.getUint8(offset)
+          offset += 1
+
+          if (msgType === MessageType.Crdt) {
+            messagesToProcess.push(r.subarray(offset))
+          } else if (msgType === MessageType.Init) {
+            const start = view.getUint32(offset)
+            offset += 4
+            const size = view.getUint32(offset)
+            offset += 4
+            resolve(createNetworkEntityFactory(start, size))
+            messagesToProcess.push(r.subarray(offset))
+          }
+        }
       }
-    }
-  }
 
-  ws.onerror = (e) => {
-    console.error(e)
-  }
+      ws.onerror = (e) => {
+        console.error(e)
+        reject(e)
+      }
+    } catch (err) {
+      reject(err)
+    }
+  })
 }
 
-export async function createNetworkTransport(url: string) {
-  if (connected) return
-  connected = true
-  if (isServer && (await isServer({})).isServer) {
-    serverSetup()
-  } else {
-    clientSetup(url)
+export async function createNetworkTransport(url: string): Promise<NetworkEntityFactory> {
+  if (connected) {
+    throw new Error('Transport is already created')
   }
+  connected = true
+  return isServer && (await isServer({})).isServer ? createServerTransport() : createClientTransport(url)
 }
 
 function syncFilter(message: Omit<TransportMessage, 'messageBuffer'>) {

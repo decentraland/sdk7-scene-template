@@ -1,6 +1,5 @@
 import {
   Entity,
-  engine,
   Transform,
   MeshRenderer,
   MeshCollider,
@@ -8,17 +7,19 @@ import {
   PointerEventType,
   InputAction,
   Material,
-  SyncEntity,
-  raycastSystem,
-  ColliderLayer,
+  SyncEntity
 } from '@dcl/sdk/ecs'
 import { Cube, Door, Spinner } from './components'
-import { Color4, Vector3 } from '@dcl/sdk/math'
+import { Color4 } from '@dcl/sdk/math'
 import { getRandomHexColor } from './utils'
 
+export type EntityFactory = {
+  addEntity(): Entity
+}
+
 // Cube factory
-export function createCube(x: number, y: number, z: number, spawner  = true): Entity {
-  const entity = engine.addEntity()
+export function createCube(entityFactory: EntityFactory, x: number, y: number, z: number): Entity {
+  const entity = entityFactory.addEntity()
 
   // Used to track the cubes
   Cube.create(entity)
