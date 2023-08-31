@@ -26,15 +26,15 @@
   resolved "https://registry.npmjs.org/@dcl/ecs-math/-/ecs-math-2.0.2.tgz"
   integrity sha512-w01+a3mpHvxGPHepu0hAAX8OfpBSQEqBbC1+U8o+5SBSQVXHiRwt3P4cK20yM8QCgZe3enPttmpqePnjTliTig==
 
-"@dcl/ecs@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.12-6029632968.commit-5675c62.tgz":
-  version "7.3.12-6029632968.commit-5675c62"
-  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.12-6029632968.commit-5675c62.tgz"
-  integrity sha512-5kbMquSZCduyCNj04N9X8qajOLfeU+X+zt1z43iGREHSgXclyrv8r2hpBaAeoTQ4HaxcsPTGahC5//tM7sLLgA==
+"@dcl/ecs@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.13-6040832285.commit-4b31480.tgz":
+  version "7.3.13-6040832285.commit-4b31480"
+  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.13-6040832285.commit-4b31480.tgz"
+  integrity sha512-KjCzCrc265uPEpjrAjRQDmBws/soglYXbUA8Gnl79tp27Ze4LVzmCFGvx8yZ+K5z/Nm2xo9JF8h/WFCf/Yh/Hg==
 
-"@dcl/explorer@1.0.139428-20230817134048.commit-4c182e2":
-  version "1.0.139428-20230817134048.commit-4c182e2"
-  resolved "https://registry.npmjs.org/@dcl/explorer/-/explorer-1.0.139428-20230817134048.commit-4c182e2.tgz"
-  integrity sha512-6b8CbIp06DQKkN5G1kX7JMGLUyIvBueEKSHIu/a80TVxgT/JUqG7CSnEql/fnGZrn8npfpsSx8lP8AODnsFYNQ==
+"@dcl/explorer@1.0.141942-20230828173247.commit-e060db1":
+  version "1.0.141942-20230828173247.commit-e060db1"
+  resolved "https://registry.npmjs.org/@dcl/explorer/-/explorer-1.0.141942-20230828173247.commit-e060db1.tgz"
+  integrity sha512-sRDMuDAzmQTALcxW6MflWIqBj1AbOagTCGqhnjPytPogrO0lKu6a+ok1LOlaH6ZzJxXuV/GVTZlsUF5ZBt2ZXA==
 
 "@dcl/hashing@^3.0.0":
   version "3.0.4"
@@ -50,15 +50,15 @@
     ipfs-unixfs-importer "^7.0.3"
     multiformats "^9.6.3"
 
-"@dcl/inspector@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/inspector/dcl-inspector-7.3.12-6029632968.commit-5675c62.tgz":
-  version "7.3.12-6029632968.commit-5675c62"
-  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/inspector/dcl-inspector-7.3.12-6029632968.commit-5675c62.tgz"
-  integrity sha512-LuRE5pPg6m3XM4UH/GB+dqSrhpDduYWYwBrzF8VQCFhyCnQWiQzPvxYi+wws6dOGXZknyDniEKUz9q87dYDFbA==
+"@dcl/inspector@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/inspector/dcl-inspector-7.3.13-6040832285.commit-4b31480.tgz":
+  version "7.3.13-6040832285.commit-4b31480"
+  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/inspector/dcl-inspector-7.3.13-6040832285.commit-4b31480.tgz"
+  integrity sha512-1+A+Pp5E3ZCixZQT43Y9uF4BDWrrJH3m34l1lfVKmKPpN0zHE00flzaNc5XPXKOqINMGjXESz0TsqXNS53irOQ==
 
-"@dcl/js-runtime@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/js-runtime/dcl-js-runtime-7.3.12-6029632968.commit-5675c62.tgz":
-  version "7.3.12-6029632968.commit-5675c62"
-  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/js-runtime/dcl-js-runtime-7.3.12-6029632968.commit-5675c62.tgz"
-  integrity sha512-cgevreOSYdkAZG8fQpbtFmGdh9FheiVO26zR6AGzrpO1ImAi/85HTxOBQRkZJZxWi2yfs4yg7ijcqvT5g0UetA==
+"@dcl/js-runtime@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/js-runtime/dcl-js-runtime-7.3.13-6040832285.commit-4b31480.tgz":
+  version "7.3.13-6040832285.commit-4b31480"
+  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/js-runtime/dcl-js-runtime-7.3.13-6040832285.commit-4b31480.tgz"
+  integrity sha512-UJmc+9uYVdRBkpK2oNMlTLw1iAGMEf7G7vDF6BjY/TfctLB1whdk+OUZjp1yjfDYqfHRSj0kOZJRIjyctJjVyw==
 
 "@dcl/linker-dapp@0.9.1":
   version "0.9.1"
@@ -90,12 +90,12 @@
   dependencies:
     "@dcl/ts-proto" "1.154.0"
 
-"@dcl/react-ecs@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/react-ecs/dcl-react-ecs-7.3.12-6029632968.commit-5675c62.tgz":
-  version "7.3.12-6029632968.commit-5675c62"
-  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/react-ecs/dcl-react-ecs-7.3.12-6029632968.commit-5675c62.tgz"
-  integrity sha512-1VvcRgr18f/R8SwXEJGBHW3j8WwdYFpHJwSB981EaQXETCQEF/BDnP/BqfS6U1SlANo2O4+Wdk9LyWwogRVc/A==
+"@dcl/react-ecs@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/react-ecs/dcl-react-ecs-7.3.13-6040832285.commit-4b31480.tgz":
+  version "7.3.13-6040832285.commit-4b31480"
+  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/react-ecs/dcl-react-ecs-7.3.13-6040832285.commit-4b31480.tgz"
+  integrity sha512-s9vnAGSpSnK5obHHTrONGGMr2fbxYHUiuULUd89HZd8KgEdRGea6OJNmMGIezPZIyA86Bbyfd2puJaTcCl5yzQ==
   dependencies:
-    "@dcl/ecs" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.12-6029632968.commit-5675c62.tgz"
+    "@dcl/ecs" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.13-6040832285.commit-4b31480.tgz"
     react "^18.2.0"
     react-reconciler "^0.29.0"
 
@@ -126,31 +126,31 @@
     ajv-keywords "^5.1.0"
 
 "@dcl/schemas@^9.0.0":
-  version "9.4.0"
-  resolved "https://registry.npmjs.org/@dcl/schemas/-/schemas-9.4.0.tgz"
-  integrity sha512-ml1dSnI3e+goJdnqetJgAMZN05R+XlfYULeg47nPs/ugDtcAttSUNuUfRnXOV3UevQ6Y6RqZto1k0ftTsf3VQg==
+  version "9.4.1"
+  resolved "https://registry.npmjs.org/@dcl/schemas/-/schemas-9.4.1.tgz"
+  integrity sha512-oM9y5CuKKMH6kjJLXpD9JC1L1JTCkJDshUk5TUNkkvWaP2ljXaxnU99a1LoI7jfKnTkBAASK685bf0totbXdcQ==
   dependencies:
     ajv "^8.11.0"
     ajv-errors "^3.0.0"
     ajv-keywords "^5.1.0"
 
 "@dcl/schemas@^9.2.0":
-  version "9.4.0"
-  resolved "https://registry.npmjs.org/@dcl/schemas/-/schemas-9.4.0.tgz"
-  integrity sha512-ml1dSnI3e+goJdnqetJgAMZN05R+XlfYULeg47nPs/ugDtcAttSUNuUfRnXOV3UevQ6Y6RqZto1k0ftTsf3VQg==
+  version "9.4.1"
+  resolved "https://registry.npmjs.org/@dcl/schemas/-/schemas-9.4.1.tgz"
+  integrity sha512-oM9y5CuKKMH6kjJLXpD9JC1L1JTCkJDshUk5TUNkkvWaP2ljXaxnU99a1LoI7jfKnTkBAASK685bf0totbXdcQ==
   dependencies:
     ajv "^8.11.0"
     ajv-errors "^3.0.0"
     ajv-keywords "^5.1.0"
 
-"@dcl/sdk-commands@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-commands-7.3.12-6029632968.commit-5675c62.tgz":
-  version "7.3.12-6029632968.commit-5675c62"
-  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-commands-7.3.12-6029632968.commit-5675c62.tgz"
-  integrity sha512-UHG46m56oNA3RRpKzzS6V8Dc4ygB7ZgqgQ44XRzA0nygEcW8raTI8o4icBqPbkkzFQWi7vklHCb7ObGrY75qiA==
+"@dcl/sdk-commands@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-commands-7.3.13-6040832285.commit-4b31480.tgz":
+  version "7.3.13-6040832285.commit-4b31480"
+  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-commands-7.3.13-6040832285.commit-4b31480.tgz"
+  integrity sha512-nVyT5xXcR2UtYuXbzPI72+giC2/pWyKIcE5TkM/LNjjSZU9hMD7n7bJueuMiLyVt7tRDcKHhJj20krabRVrDdA==
   dependencies:
-    "@dcl/ecs" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.12-6029632968.commit-5675c62.tgz"
+    "@dcl/ecs" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.13-6040832285.commit-4b31480.tgz"
     "@dcl/hashing" "1.1.3"
-    "@dcl/inspector" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/inspector/dcl-inspector-7.3.12-6029632968.commit-5675c62.tgz"
+    "@dcl/inspector" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/inspector/dcl-inspector-7.3.13-6040832285.commit-4b31480.tgz"
     "@dcl/linker-dapp" "0.9.1"
     "@dcl/mini-comms" "1.0.1-20230216163137.commit-a4c75be"
     "@dcl/protocol" "1.0.0-5812097343.commit-8025576"
@@ -179,18 +179,18 @@
     undici "^5.19.1"
     uuid "^9.0.0"
 
-"@dcl/sdk@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-7.3.12-6029632968.commit-5675c62.tgz":
-  version "7.3.12-6029632968.commit-5675c62"
-  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-7.3.12-6029632968.commit-5675c62.tgz"
-  integrity sha512-KIzlVm4BPJoj+c9pDAkH+MCrTYmFoV3sqTX9scY/EuVZK4NlkkwH8J3PAcQ92CmQx0B6/nScakLNeva9aJGJ2Q==
+"@dcl/sdk@https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-7.3.13-6040832285.commit-4b31480.tgz":
+  version "7.3.13-6040832285.commit-4b31480"
+  resolved "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-7.3.13-6040832285.commit-4b31480.tgz"
+  integrity sha512-xRPAK+t1HBIdXQUi5f0g0Y0zzpeg+bRrV751dTMtGM31RV54CO4uSKCGwS7bM+yiMQCUzkZ93lkgyUowqyQ6CQ==
   dependencies:
-    "@dcl/ecs" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.12-6029632968.commit-5675c62.tgz"
+    "@dcl/ecs" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/ecs/dcl-ecs-7.3.13-6040832285.commit-4b31480.tgz"
     "@dcl/ecs-math" "2.0.2"
-    "@dcl/explorer" "1.0.139428-20230817134048.commit-4c182e2"
-    "@dcl/inspector" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/inspector/dcl-inspector-7.3.12-6029632968.commit-5675c62.tgz"
-    "@dcl/js-runtime" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/js-runtime/dcl-js-runtime-7.3.12-6029632968.commit-5675c62.tgz"
-    "@dcl/react-ecs" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/react-ecs/dcl-react-ecs-7.3.12-6029632968.commit-5675c62.tgz"
-    "@dcl/sdk-commands" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-commands-7.3.12-6029632968.commit-5675c62.tgz"
+    "@dcl/explorer" "1.0.141942-20230828173247.commit-e060db1"
+    "@dcl/inspector" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/inspector/dcl-inspector-7.3.13-6040832285.commit-4b31480.tgz"
+    "@dcl/js-runtime" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/js-runtime/dcl-js-runtime-7.3.13-6040832285.commit-4b31480.tgz"
+    "@dcl/react-ecs" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/@dcl/react-ecs/dcl-react-ecs-7.3.13-6040832285.commit-4b31480.tgz"
+    "@dcl/sdk-commands" "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-commands-7.3.13-6040832285.commit-4b31480.tgz"
 
 "@dcl/ts-proto@1.154.0":
   version "1.154.0"
@@ -291,9 +291,9 @@
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
 "@scure/base@~1.1.0":
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/@scure/base/-/base-1.1.2.tgz"
-  integrity sha512-sSCrnIdaUZQHhBxZThMuk7Wm1TWzMD3uJNdGgx3JS23xSqevu0tAOsg8k66nL3R2NwQe65AI9GgqpPOgZys/eA==
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@scure/base/-/base-1.1.3.tgz"
+  integrity sha512-/+SgoRjLq7Xlf0CWuLHq2LUZeL/w65kfzAPG5NH9pcmBhs+nunQTn4gvdwgMTIXnt9b2C/1SeL2XiysZEyIC9Q==
 
 "@scure/bip32@1.1.5":
   version "1.1.5"
