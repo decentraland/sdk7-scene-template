@@ -11,6 +11,7 @@ import {
 } from '@dcl/sdk/ecs'
 import { Cube, Door, Spinner } from './components'
 import { Color4 } from '@dcl/sdk/math'
+
 import { getRandomHexColor } from './utils'
 
 export type EntityFactory = {

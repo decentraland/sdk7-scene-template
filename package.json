@@ -10,7 +10,7 @@
     "upgrade-sdk:next": "npm install --save-dev @dcl/sdk@next"
   },
   "devDependencies": {
-    "@dcl/sdk": "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-7.3.13-6040832285.commit-4b31480.tgz"
+    "@dcl/sdk": "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/feat/sync-scenes/dcl-sdk-7.3.13-6042536130.commit-cf020f5.tgz"
   },
   "engines": {
     "node": ">=16.0.0",
