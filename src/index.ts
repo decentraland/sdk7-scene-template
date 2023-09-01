@@ -16,7 +16,7 @@ export async function main() {
   const networkEntityFactory = await createNetworkTransport(serverUrl)
 
   // draw UI
-  setupUi(engine)
+  setupUi(networkEntityFactory)
 
   if ((await isServer({})).isServer) {
     const entity = createCube(networkEntityFactory, 1, 1, 1)

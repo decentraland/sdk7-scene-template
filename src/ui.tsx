@@ -57,7 +57,7 @@ export function setupUi(entityFactory: EntityFactory) {
         />
         <Button
           uiTransform={{ width: 140, height: 40, margin: 8 }}
-          value="Spawn Local cube"
+          value="Spawn Sync cube"
           variant="primary"
           fontSize={14}
           onMouseDown={() => {
