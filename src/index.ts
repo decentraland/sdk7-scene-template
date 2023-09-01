@@ -12,7 +12,7 @@ engine.addSystem(changeColorSystem)
 
 export async function main() {
   const realm = await getRealm({})
-  const serverUrl = realm.realmInfo?.isPreview ? 'ws://127.0.0.1:3000/ws' : 'wss://scene-state-server.decentraland.zone/ws'
+  const serverUrl = realm.realmInfo?.isPreview ? 'ws://127.0.0.1:3000/ws' : 'wss://scene-state-server.decentraland.org/ws'
   const networkEntityFactory = await createNetworkTransport(serverUrl)
 
   // draw UI
