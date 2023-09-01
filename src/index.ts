@@ -17,15 +17,7 @@ export async function main() {
 
   // draw UI
   setupUi(networkEntityFactory)
-
-  if ((await isServer({})).isServer) {
-    const entity = createCube(networkEntityFactory, 1, 1, 1)
-    pointerEventsSystem.onPointerDown(
-      { entity: entity, opts: { button: InputAction.IA_POINTER, hoverText: 'Spawn Sync cube' } },
-      function () {
-        createCube(networkEntityFactory, 1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8)
-      }
-    )
+  if (isServer && (await isServer({})).isServer) {
+    createCube(networkEntityFactory, 1, 1, 1)
   }
-
 }
