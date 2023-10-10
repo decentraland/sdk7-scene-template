@@ -1,6 +1,28 @@
-import { engine, InputAction, inputSystem, Material, MeshCollider, pointerEventsSystem } from '@dcl/sdk/ecs'
+import {
+  Animator,
+  AudioSource,
+  AvatarAttach,
+  engine,
+  GltfContainer,
+  InputAction,
+  Material,
+  MeshCollider,
+  pointerEventsSystem,
+  Transform,
+  VisibilityComponent
+} from '@dcl/sdk/ecs'
 import { Color4 } from '@dcl/sdk/math'
+import { initAssetPacks } from '@dcl/asset-packs/dist/scene-entrypoint'
 
+// You can remove this if you don't use any asset packs
+initAssetPacks(engine, pointerEventsSystem, {
+  Animator,
+  AudioSource,
+  AvatarAttach,
+  Transform,
+  VisibilityComponent,
+  GltfContainer
+})
 
 import { bounceScalingSystem, circularSystem } from './systems'
 
@@ -17,7 +39,7 @@ export function main() {
   setupUi()
 
   // fetch cube from Inspector
-  const cube = engine.getEntityOrNullByName("Magic Cube")
+  const cube = engine.getEntityOrNullByName('Magic Cube')
   if (cube) {
     // Give the cube a color
     Material.setPbrMaterial(cube, { albedoColor: Color4.Blue() })
@@ -30,12 +52,11 @@ export function main() {
 
     // Add a click behavior to the cube, spawning new cubes in random places, and adding a bouncy effect for feedback
     pointerEventsSystem.onPointerDown(
-      { entity: cube, opts: { button: InputAction.IA_POINTER, hoverText: "spawn" } },
+      { entity: cube, opts: { button: InputAction.IA_POINTER, hoverText: 'spawn' } },
       () => {
         createCube(1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8, false)
         BounceScaling.createOrReplace(cube)
       }
     )
   }
-
 }
