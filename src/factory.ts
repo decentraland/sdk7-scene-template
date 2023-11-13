@@ -7,9 +7,9 @@ import {
   PointerEvents,
   PointerEventType,
   InputAction,
-  Material
+  Material, pointerEventsSystem
 } from '@dcl/sdk/ecs'
-import { Cube, Spinner } from './components'
+import {BounceScaling, Cube, Spinner} from './components'
 import { Color4 } from '@dcl/sdk/math'
 import { getRandomHexColor } from './utils'
 
@@ -32,7 +32,7 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
 
   // if it is a spawner, then we set the pointer hover feedback
   if (spawner) {
-    PointerEvents.create(entity, {
+    /*PointerEvents.create(entity, {
       pointerEvents: [
         {
           eventType: PointerEventType.PET_DOWN,
@@ -44,7 +44,23 @@ export function createCube(x: number, y: number, z: number, spawner = true): Ent
           }
         }
       ]
-    })
+    })*/
+    // Add a click behavior to the cube, spawning new cubes in random places, and adding a bouncy effect for feedback
+    pointerEventsSystem.onPointerDown(
+      { 
+        entity: entity,
+        opts: {
+          button: InputAction.IA_PRIMARY,
+          hoverText: 'Press E to spawn',
+          maxDistance: 100,
+          showFeedback: true 
+        } 
+      },
+      () => {
+        createCube(1 + Math.random() * 8, Math.random() * 8, 1 + Math.random() * 8, false)
+        BounceScaling.createOrReplace(entity)
+      }
+    )
   }
 
   return entity
