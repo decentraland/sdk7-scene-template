@@ -1,10 +1,15 @@
 import {
   engine,
   Transform,
-  Schemas,
+  inputSystem,
+  PointerEvents,
+  InputAction,
+  PointerEventType,
+  Material,
 } from '@dcl/sdk/ecs'
-import { Quaternion, Vector3 } from '@dcl/sdk/math'
-import { BounceScaling, Spinner } from './components'
+import { Color4, Quaternion, Vector3 } from '@dcl/sdk/math'
+import { Cube, Spinner } from './components'
+import { getRandomHexColor } from './utils'
 
 
 /**
@@ -23,23 +28,13 @@ export function circularSystem(dt: number) {
   }
 }
 
-
 /**
- * Add this system and every entity with BounceScaling will bounce for 5 seconds
- * @param dt - detal time in seconds
+ * Search for the cubes that has pointerEvents, and when there is a click change the color.
  */
-export function bounceScalingSystem(dt: number) {
-  const clickedCubes = engine.getEntitiesWith(BounceScaling, Transform)
-  for (const [entity] of clickedCubes) {
-    const m = BounceScaling.getMutable(entity)
-    m.t += dt
-
-    if (m.t > 5) {
-      Transform.getMutable(entity).scale = Vector3.One()
-      BounceScaling.deleteFrom(entity)
-    } else {
-      const factor = 0.9 + 0.2 * Math.exp(-1.5 * m.t) * Math.sin(10 * m.t)
-      Transform.getMutable(entity).scale = Vector3.scale(Vector3.One(), factor)
+export function changeColorSystem() {
+  for (const [entity] of engine.getEntitiesWith(Cube, PointerEvents)) {
+    if (inputSystem.isTriggered(InputAction.IA_POINTER, PointerEventType.PET_DOWN, entity)) {
+      Material.setPbrMaterial(entity, { albedoColor: Color4.fromHexString(getRandomHexColor()) })
     }
   }
 }
