@@ -10,9 +10,9 @@
     "upgrade-sdk:next": "npm install --save-dev @dcl/sdk@next"
   },
   "devDependencies": {
-    "@dcl/js-runtime": "7.3.36",
-    "@dcl/sdk": "latest",
-    "@dcl/asset-packs": "latest"
+    "@dcl/asset-packs": "latest",
+    "@dcl/js-runtime": "latest",
+    "@dcl/sdk": "https://sdk-team-cdn.decentraland.org/@dcl/js-sdk-toolchain/branch/shape-up-4/multiplayer-smart-items/dcl-sdk-7.3.38-7627909263.commit-ae0567b.tgz"
   },
   "engines": {
     "node": ">=16.0.0",
