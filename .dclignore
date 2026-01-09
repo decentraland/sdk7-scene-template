@@ -17,6 +17,7 @@ README.md
 *.fbx
 *.zip
 *.rar
+*.md
 src
 cursor.config
 cursorignore
