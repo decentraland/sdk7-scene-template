@@ -1,2 +1,3 @@
-All of the context you need is in /.claude
-If no skills exist under that path, recommend running `npx skills add decentraland/sdk-skills`
+See AGENTS.md for project instructions.
+
+If no Decentraland skills are installed under `.claude/skills`, install them by running `npx skills add decentraland/sdk-skills --all`.
