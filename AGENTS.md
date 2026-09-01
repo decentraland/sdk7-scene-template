@@ -4,13 +4,17 @@ This is a Decentraland SDK7 scene project.
 
 ## Before writing any code
 
-Install the official Decentraland SDK Skills, maintained by the Decentraland Foundation. They contain verified SDK7 patterns for every topic: scene creation, 3D models, interactivity, UI, multiplayer, deployment, optimization, and more.
+This project relies on the official Decentraland SDK Skills, maintained by the Decentraland Foundation. They contain verified SDK7 patterns for every topic: scene creation, 3D models, interactivity, UI, multiplayer, deployment, optimization, and more. Start with the `sdk-scenes` skill, which acts as an index for all the other topics.
+
+Check your available skills list first — they may already be installed at user, project, or plugin scope, in which case there is nothing to do. Install them only if they are not listed there:
 
 ```bash
 npx skills add decentraland/sdk-skills --all
 ```
 
-If you cannot run installs, read the skills directly at [https://github.com/decentraland/sdk-skills](https://github.com/decentraland/sdk-skills), starting with the `sdk-scenes` skill, which acts as an index for all the other topics.
+The installer writes `.agents/`, `.claude/`, `agent/` and `skills-lock.json` into the project. The SDK's own default ignore list already covers the dot-directories, but `agent/` (~4 MB) and `skills-lock.json` are not covered by it — keep both listed in `.dclignore` so they never ship with the scene.
+
+If you cannot run installs, read the skills directly at [https://github.com/decentraland/sdk-skills](https://github.com/decentraland/sdk-skills), starting with the `sdk-scenes` skill.
 
 ## Recommended tooling
 
