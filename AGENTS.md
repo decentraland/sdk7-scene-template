@@ -4,17 +4,31 @@ This is a Decentraland SDK7 scene project.
 
 ## Before writing any code
 
-This project relies on the official Decentraland SDK Skills, maintained by the Decentraland Foundation. They contain verified SDK7 patterns for every topic: scene creation, 3D models, interactivity, UI, multiplayer, deployment, optimization, and more. Start with the `sdk-scenes` skill, which acts as an index for all the other topics.
+Use the official Decentraland SDK Skills for all scene work unless the user asks you not to. The Decentraland Foundation maintains them, and they contain the verified SDK7 patterns for every topic: scene creation, 3D models, interactivity, UI, multiplayer, deployment, optimization, and more. They're the default source of truth for SDK7, so prefer them over writing scene code from memory.
 
-Check your available skills list first — they may already be installed at user, project, or plugin scope, in which case there is nothing to do. Install them only if they are not listed there:
+### 1. Make sure the skills are installed
+
+Skip this step if the user doesn't want the skills installed.
+
+Check your available skills list first. If `sdk-scenes` and its topic skills are already listed at user, project, or plugin scope, go to step 2. Otherwise, run this command from the repository root. It installs every skill in the repository at its latest version, including skills added after this template was published. Run the same command again to update them:
 
 ```bash
 npx skills add decentraland/sdk-skills --all
 ```
 
-The installer writes `.agents/`, `.claude/`, `agent/` and `skills-lock.json` into the project. The SDK's own default ignore list already covers the dot-directories, but `agent/` (~4 MB) and `skills-lock.json` are not covered by it — keep both listed in `.dclignore` so they never ship with the scene.
+The installer only installs for the agent it detects. If you use more than one agent environment, such as Claude Code and Codex, run it in each one. When it finishes, confirm that the relevant `SKILL.md` files exist.
 
-If you cannot run installs, read the skills directly at [https://github.com/decentraland/sdk-skills](https://github.com/decentraland/sdk-skills), starting with the `sdk-scenes` skill.
+The installer writes `.agents/`, `.claude/`, `agent/` and `skills-lock.json` into the project. The SDK's default ignore list already covers the dot-directories, but it doesn't cover `agent/` (~4 MB) or `skills-lock.json`. Keep both listed in `.dclignore` so they never ship with the scene. `skills-lock.json` is also listed in `.gitignore`, so it isn't committed. The `add` command always installs the latest skills and doesn't read the lock file.
+
+If you can't run installs, read the skills directly at [https://github.com/decentraland/sdk-skills](https://github.com/decentraland/sdk-skills).
+
+### 2. Load every skill that applies
+
+Use the skills as the source of truth for every SDK7 task:
+
+- Always load `sdk-scenes` first. It contains the behavioral rules and the index of all topic skills.
+- Load **every** topic skill whose triggers match the task, and read each `SKILL.md` completely. When more than one skill applies, use all of them, not just one.
+- The user's instructions take precedence over both this file and the skills. If a skill conflicts with this file, this file takes precedence.
 
 ## Recommended tooling
 
