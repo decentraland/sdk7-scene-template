@@ -22,3 +22,7 @@ src
 cursor.config
 cursorignore
 .github
+skills-lock.json
+agent/
+.agents/
+.claude/
