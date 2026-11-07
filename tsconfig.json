@@ -2,9 +2,8 @@
   "compilerOptions": {
     "allowJs": true,
     "strict": true,
-    "baseUrl": ".",
     "paths": {
-      "@dcl/asset-packs/*": ["node_modules/@dcl/inspector/node_modules/@dcl/asset-packs/*"]
+      "@dcl/asset-packs/*": ["./node_modules/@dcl/inspector/node_modules/@dcl/asset-packs/*"]
     }
   },
   "include": [
